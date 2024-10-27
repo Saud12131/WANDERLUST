@@ -1,4 +1,4 @@
-
+import './index.css'
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Intro from "./pages/intro";
