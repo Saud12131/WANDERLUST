@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export default function Signup() {
   const [formData, setFormData] = useState({
     username: '',
@@ -12,19 +14,21 @@ export default function Signup() {
     setFormData({ ...formData, [id]: value });
   };
 
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:3000/api/user/signup", formData);
-      console.log("data sended to api",response);
-
-    }catch(err){
-      console.log("unable to send data ", err.message);
-      
+      console.log("data sended to api", response);
+      if (response.status === 201) {
+        notify("Account created successfully");
+      }
+    } catch (err) {
+      console.log("an error occured", err);
+      notify("please enter correct feilds");
     }
-   
-  };
 
+  };
+  const notify = (message) => toast(message);
   return (
     <div className="main-div mt-16 m-10">
       <h2 className="text-gray-1500 text-xl font-bold text-center mb-4">Let's Signup</h2>
@@ -83,6 +87,9 @@ export default function Signup() {
           </a>
         </div>
       </form>
+      <div >
+        <ToastContainer />
+      </div>
     </div>
   );
 }

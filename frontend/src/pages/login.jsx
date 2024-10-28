@@ -1,29 +1,36 @@
 import React, { useState } from 'react'
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
+import 'react-toastify/dist/ReactToastify.css';
 export default function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
-
-  const handleSubmit =async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:3000/api/user/login", formData);
-      console.log("logged in ",response);
-
-    }catch(err){
+      console.log("logged in ", response);
+      if (response.status === 200) {
+        let token  = response.data.token;
+        localStorage.setItem("token",token);
+        notify("Loggedin Successfully");
+        navigate("/home");
+      }
+    } catch (err) {
       console.log("unable to login ", err.message);
-      
+      notify("Please enter valid details");
     }
-   
   };
 
+  const notify = (message) => toast(message);
   return (
     <div className="main-div mt-16 m-10">
       <h2 className="text-gray-1500 text-xl font-bold text-center mb-4">Welcome back!</h2>
@@ -61,13 +68,16 @@ export default function Login() {
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
           >
-            Login``
+            Login
           </button>
           <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
             Forgot Password?
           </a>
         </div>
       </form>
+      <div >
+        <ToastContainer />
+      </div>
     </div>
   );
 }

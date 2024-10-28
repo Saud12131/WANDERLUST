@@ -1,57 +1,56 @@
-const mongoose = require("mongoose");
-const express = require('express');
 const User = require('../models/usermodel');
-const Task = require('../models/taskmodel');
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const Signup = async (req, res) => {
 
-    const { username, email, password } = req.body;
-    //all fields not enterd
-    if (!username, !email, !password) {
-        res.status(400).send("enter all the fiels");
+const Signup = async (req, res) => {
+  const { username, email, password } = req.body;
+
+  if (!username || !email || !password) {
+    return res.status(400).json({ success: false, message: "Please enter all required fields." });
+  }
+
+  try {
+   
+    const user = await User.create({ username, email, password });
+
+    if (user) {
+      console.log("User added successfully:", user);
+      return res.status(201).json({ success: true, message: "User added successfully" });
+    } else {
+      throw new Error("Unable to register user");
     }
-    //new user
-    let user = await User.create({
-        username,
-        email,
-        password,
-    });
-    try {
-        if (user) {
-            res.send("user added sucessfully");
-            console.log(user);
-        } else {
-            console.log("unable to reguster user");
-        }
-    } catch (err) {
-        res.send(err);
-    }
-}
+  } catch (err) {
+    console.error("Error during signup:", err);
+    return res.status(500).json({ success: false, message: "Server error. Please try again later." });
+  }
+};
 
 const Login = async (req, res) => {
+  const { email, password } = req.body;
 
-    let { email, password } = req.body;
-    if (!email || !password) {
-        res.send("please enter all the fields");
-        console.log("please enter all the fields");
+  if (!email || !password) {
+    return res.status(400).json({ success: false, message: "Please enter all required fields." });
+  }
+
+  try {
+
+    const user = await User.findOne({ email });
+
+    if (user && (await user.matchpassword(password))) {
+
+      const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+      return res.status(200).json({
+        success: true,
+        message: "Logged in successfully",
+        token,  
+      });
+    } else {
+      return res.status(401).json({ success: false, message: "Invalid email or password." });
     }
+  } catch (err) {
+    console.error("Error during login:", err);
+    return res.status(500).json({ success: false, message: "Server error. Please try again later." });
+  }
+};
 
-    try {
-        const user = await User.findOne({ email });
-        if (user && (await user.matchpassword(password))) {
-            const token = jwt.sign({id:user._id},process.env.JWT_SECRET,{expiresIn:'1h'});
-            res.send(`loggedin successfully ${token}`);
-        
-        } else {
-            res.send("invalid details field you fellow dev?/")
-        }
-    } catch (err) {
-        res.status(500).json({
-            success: false,
-            message: err.message || err,
-        });
-    }
-
-}
 module.exports = { Signup, Login };
