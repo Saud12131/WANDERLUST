@@ -3,7 +3,7 @@ export default function Intro() {
     return (
         <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
             <div className="hello">
-                <h1 className="text-4xl font-bold text-blue-600">WELCOME TO TODO!</h1>
+                <h1 className="text-4xl font-bold text-blue-600">WELCOME TO WANDERLUST!</h1>
             </div>
             <br />
             <div className="buttons">

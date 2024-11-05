@@ -6,7 +6,7 @@ const http = require('http');
 const server = http.createServer(app);
 const connectDB = require("./config/connectdb");
 const UserRoute = require('../backend/routes/userroutes');
-const TaskRoute = require('../backend/routes/taskRoute');
+const listingRoute = require("../backend/routes/listingRoutes");
 const cors = require('cors');
 connectDB();
 app.use(express.json());
@@ -16,10 +16,10 @@ app.use(cors({
 }));
 
 server.listen(process.env.PORT, () => {
-    console.log(`server listing to port ${process.env.PORT}`);
+  console.log(`server listing to port ${process.env.PORT}`);
 });
 app.get("/", (req, res) => {
-    res.send("server working");
+  res.send("server working");
 });
 app.use("/api/user", UserRoute);
-app.use("/api/task", TaskRoute);
+app.use("/api/listings", listingRoute);

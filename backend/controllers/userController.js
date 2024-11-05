@@ -9,9 +9,7 @@ const Signup = async (req, res) => {
   }
 
   try {
-   
     const user = await User.create({ username, email, password });
-
     if (user) {
       console.log("User added successfully:", user);
       return res.status(201).json({ success: true, message: "User added successfully" });
@@ -42,7 +40,8 @@ const Login = async (req, res) => {
       return res.status(200).json({
         success: true,
         message: "Logged in successfully",
-        token,  
+        token,
+        user: { _id: user._id, name: user.name, email: user.email },
       });
     } else {
       return res.status(401).json({ success: false, message: "Invalid email or password." });

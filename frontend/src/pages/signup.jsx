@@ -23,8 +23,8 @@ export default function Signup() {
         notify("Account created successfully");
       }
     } catch (err) {
+      notify("please enter correct feilds or email already exist");
       console.log("an error occured", err);
-      notify("please enter correct feilds");
     }
 
   };
