@@ -94,6 +94,34 @@ const updateListing = async (req, res) => {
     }
 };
 
+const ListingDetails = async (req, res) => {
+
+    const { id } = req.params;
+    if (!id) {
+        res.status(404).json({
+            success: false,
+            message: " id not recived params "
+        });
+    }
+    const listingdetails = await Listing.findById(id);
+    if (!listingdetails) {
+        res.status(404).json({
+            success: false,
+            message: " listing not recived  "
+        });
+    }
+    try {
+        res.json({ success: true, listingdetails });
+    } catch (err) {
+        console.log(err);
+        
+        res.status(500).json({
+            success: false,
+            message: " some thing error occured "
+        });
+    }
+}
+
 const deleteListing = async (req, res) => {
 
     try {
@@ -124,4 +152,5 @@ module.exports = {
     updateListing,
     deleteListing,
     allListings,
+    ListingDetails,
 };

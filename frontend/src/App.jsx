@@ -4,9 +4,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Intro from "./pages/intro";
 import Signup from "./pages/signup";
 import Login from "./pages/login";
-import Home from "./pages/home";
+import AllListings from './pages/listings';
 import ListingInfo from './pages/listingInfo';
 import ProtectedRoute from './auth/routeauth';
+import CreateListing from './pages/Createlisting';
 
 function App() {
   return (
@@ -15,13 +16,30 @@ function App() {
         <Route index path="/" element={<Intro />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/listingdetails" element={<ListingInfo/>} />
 
         <Route
-          path="/home"
+          path="/alllistings"
           element={
             <ProtectedRoute>
-              <Home />
+              <AllListings />
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/newlisting"
+          element={
+            <ProtectedRoute>
+              <CreateListing />
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/listingdetails/:id"
+          element={
+            <ProtectedRoute>
+              <ListingInfo />
             </ProtectedRoute>
           }
         />

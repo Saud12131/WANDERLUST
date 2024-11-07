@@ -1,7 +1,9 @@
 import React from 'react';
+import Navbar from './navbar';
 export default function Intro() {
     return (
         <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
+            <Navbar/>
             <div className="hello">
                 <h1 className="text-4xl font-bold text-blue-600">WELCOME TO WANDERLUST!</h1>
             </div>

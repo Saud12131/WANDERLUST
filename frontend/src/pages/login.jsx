@@ -22,7 +22,7 @@ export default function Login() {
         let token  = response.data.token;
         localStorage.setItem("token",token);
         notify("Loggedin Successfully");
-        navigate("/home");
+        navigate("/alllistings");
       }
     } catch (err) {
       console.log("unable to login ", err.message);

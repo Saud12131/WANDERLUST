@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
 export default function Signup() {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: '',
   });
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
@@ -21,6 +22,7 @@ export default function Signup() {
       console.log("data sended to api", response);
       if (response.status === 201) {
         notify("Account created successfully");
+        navigate("/login")
       }
     } catch (err) {
       notify("please enter correct feilds or email already exist");
