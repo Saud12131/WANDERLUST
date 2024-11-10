@@ -1,10 +1,12 @@
 const Listing = require("../models/listingmodel");
 
 const createListing = async (req, res) => {
+    console.log("recived body",req.body);
+    
     const { title, description, image, price, country, location } = req.body;
-    // const userId = req.user._id;  // Ensure userId is correctly fetched
+   
 
-    if (!title || !description || !price || !country || !location) {
+    if (!title || !description || !price || !country || !location||!image) {
         return res.status(400).json({
             success: false,
             message: "All fields are required."

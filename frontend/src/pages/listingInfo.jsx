@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router';
-import axios from 'axios'; 
-
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 export default function ListingInfo() {
   const [listinginfo, setListingInfo] = useState(null);
   const { id } = useParams();
-
+  const navigate = useNavigate();
+  const notify = (message) => toast(message);
+  const currentUser = JSON.parse(localStorage.getItem("user"));  // Get logged-in user
+  const userId = currentUser?.id;
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -30,6 +34,22 @@ export default function ListingInfo() {
     if (id) fetchData();
   }, []);
 
+  const handelDelete = async (req, res) => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await axios.delete(`http://localhost:3000/api/listings/deletelisting/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (response.data.success) {
+        navigate("/alllistings");
+      }
+    } catch (err) {
+      notify(err.message);
+    }
+  }
+
   return (
     <div className="bg-blue-50 min-h-screen flex items-center justify-center py-10">
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-xl border border-blue-200">
@@ -51,16 +71,22 @@ export default function ListingInfo() {
                 <p><span className="font-medium">Country:</span> {listinginfo.country}</p>
                 <p><span className="font-medium">Location:</span> {listinginfo.location}</p>
               </div>
-            <div>
-            <button className="bg-green-500 text-white py-2 px-4 rounded mt-4 hover:bg-blue-600 transition duration-300 m-2" >BOOK</button>
-          </div>
-      </div>
-    </>
-  ) : (
-    <p className="text-gray-500 text-center">Loading listing details...</p>
-  )
-}
+              <div>
+                {listinginfo.owner._id === userId && (
+                  <button onClick={handelDelete} className="bg-red-500 text-white py-2 px-4 rounded mt-4 hover:bg-blue-600 transition duration-300 m-2">
+                    Delete Listing
+                  </button>
+                )}
+                <button className="bg-green-500 text-white py-2 px-4 rounded mt-4 hover:bg-blue-600 transition duration-300 m-2" >BOOK</button>
+              </div>
+            </div>
+          </>
+        ) : (
+          <p className="text-gray-500 text-center">Loading listing details...</p>
+        )
+        }
       </div >
+      <ToastContainer />
     </div >
   );
 }
