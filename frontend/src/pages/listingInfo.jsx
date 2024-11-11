@@ -3,13 +3,15 @@ import { useParams } from 'react-router';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
+ import { jwtDecode } from "jwt-decode";
 export default function ListingInfo() {
   const [listinginfo, setListingInfo] = useState(null);
   const { id } = useParams();
   const navigate = useNavigate();
   const notify = (message) => toast(message);
-  const currentUser = JSON.parse(localStorage.getItem("user"));  // Get logged-in user
-  const userId = currentUser?.id;
+  const token = localStorage.getItem('token');
+  const userId = token ? jwtDecode(token).id : null;
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -32,9 +34,10 @@ export default function ListingInfo() {
     };
 
     if (id) fetchData();
-  }, []);
+    // console.log(userId);
 
-  const handelDelete = async (req, res) => {
+  }, []);
+  const handelDelete = async () => {
     try {
       const token = localStorage.getItem('token');
       const response = await axios.delete(`http://localhost:3000/api/listings/deletelisting/${id}`, {
@@ -49,7 +52,6 @@ export default function ListingInfo() {
       notify(err.message);
     }
   }
-
   return (
     <div className="bg-blue-50 min-h-screen flex items-center justify-center py-10">
       <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-xl border border-blue-200">
@@ -65,6 +67,7 @@ export default function ListingInfo() {
             </div>
             <div className="space-y-4">
               <h2 className="text-2xl font-bold text-blue-800">{listinginfo.title}</h2>
+              <h2 className='text-xl font-bold text-blue-800'> OWNER:-{listinginfo.owner.username}</h2>
               <p className="text-lg font-semibold text-blue-600">Price: ${listinginfo.price}</p>
               <p className="text-md text-gray-600">{listinginfo.description}</p>
               <div className="flex flex-col text-blue-700 space-y-2">
@@ -73,7 +76,10 @@ export default function ListingInfo() {
               </div>
               <div>
                 {listinginfo.owner._id === userId && (
-                  <button onClick={handelDelete} className="bg-red-500 text-white py-2 px-4 rounded mt-4 hover:bg-blue-600 transition duration-300 m-2">
+                  <button
+                    onClick={handelDelete}
+                    className="bg-red-500 text-white py-2 px-4 rounded mt-4 hover:bg-blue-600 transition duration-300 m-2"
+                  >
                     Delete Listing
                   </button>
                 )}
@@ -83,10 +89,9 @@ export default function ListingInfo() {
           </>
         ) : (
           <p className="text-gray-500 text-center">Loading listing details...</p>
-        )
-        }
-      </div >
+        )}
+      </div>
       <ToastContainer />
-    </div >
+    </div>
   );
 }

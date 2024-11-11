@@ -1,12 +1,12 @@
 const Listing = require("../models/listingmodel");
 
 const createListing = async (req, res) => {
-    console.log("recived body",req.body);
-    
-    const { title, description, image, price, country, location } = req.body;
-   
+    //console.log("recived body", req.body);
 
-    if (!title || !description || !price || !country || !location||!image) {
+    const { title, description, image, price, country, location } = req.body;
+
+
+    if (!title || !description || !price || !country || !location || !image) {
         return res.status(400).json({
             success: false,
             message: "All fields are required."
@@ -105,7 +105,8 @@ const ListingDetails = async (req, res) => {
             message: " id not recived params "
         });
     }
-    const listingdetails = await Listing.findById(id);
+    const listingdetails = await Listing.findById(id).populate('owner', 'username ');
+
     if (!listingdetails) {
         res.status(404).json({
             success: false,
@@ -116,7 +117,7 @@ const ListingDetails = async (req, res) => {
         res.json({ success: true, listingdetails });
     } catch (err) {
         console.log(err);
-        
+
         res.status(500).json({
             success: false,
             message: " some thing error occured "
@@ -125,19 +126,27 @@ const ListingDetails = async (req, res) => {
 }
 
 const deleteListing = async (req, res) => {
-
+    const ListingId = req.params.id
+    const UserId = req.user.id;
     try {
-        const deleteListing = await Listing.findByIdAndDelete(req.params.id);
-        if (!deleteListing) {
+        const listing = await Listing.findById(ListingId);
+
+        if (!listing) {
             res.status(404).json({
                 success: false,
                 message: "listing not available"
             });
         }
+        if (listing.owner.toString() !== UserId) {
+            res.status(403).json({
+                success: false,
+                message: "unable to delete you are not authorized"
+            });
+        }
+        await Listing.findByIdAndDelete(ListingId);
         res.status(200).json({
             success: true,
             message: "listing deleted successfully",
-            listing: deleteListing
         });
     } catch (err) {
         res.status(500).status({
@@ -148,6 +157,42 @@ const deleteListing = async (req, res) => {
     }
 
 }
+const SearchListing = async (req, res) => {
+    const { title } = req.query;
+    
+    if (!title) {
+        return res.status(400).json({
+            success: false,
+            message: "Title not received from params",
+        });
+    }
+
+    try {
+      
+        const listings = await Listing.find({
+            title: { $regex: title, $options: 'i' },
+        }).populate('owner', 'username email');  
+
+
+        if (listings.length === 0) {
+            return res.status(404).json({
+                success: false,
+                message: "No listings found",
+            });
+        }
+
+        return res.status(200).json({
+            success: true,
+            listings,
+        });
+    } catch (err) {
+        console.error(err);
+        return res.status(500).json({
+            success: false,
+            message: `Error occurred: ${err.message}`,
+        });
+    }
+};
 
 module.exports = {
     createListing,
@@ -155,4 +200,5 @@ module.exports = {
     deleteListing,
     allListings,
     ListingDetails,
+    SearchListing,
 };
