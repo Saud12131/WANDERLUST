@@ -9,6 +9,7 @@ import ListingInfo from './pages/listingInfo';
 import ProtectedRoute from './auth/routeauth';
 import CreateListing from './pages/Createlisting';
 import SearchResults from './pages/searchresults';
+import UserInfo from './pages/userInfo';
 function App() {
   return (
     <BrowserRouter>
@@ -19,6 +20,14 @@ function App() {
         <Route path="/searchresults" element={<SearchResults />} />
         <Route path="/alllistings" element={<AllListings />} />
 
+        <Route
+          path="/userinfo"
+          element={
+            <ProtectedRoute>
+              <UserInfo />
+            </ProtectedRoute>
+          }
+        />
         <Route
           path="/newlisting"
           element={

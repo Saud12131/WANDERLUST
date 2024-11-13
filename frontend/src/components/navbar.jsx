@@ -58,9 +58,10 @@ const Navbar = () => {
               <Link to="/alllistings" className="text-white hover:text-gray-300">
                 All Listings
               </Link>
-              <Link to="/alllistings" className="text-white hover:text-gray-300">
-                <i className="fa-solid fa-user size-5"></i>
-              </Link>
+             <button onClick={()=>navigate("/userinfo")}>
+                <i className="fa-solid fa-user size-5 text-white"></i>
+             </button>
+              
               <button className="text-white hover:text-gray-300" onClick={handelLogout}>
                 Logout
               </button>

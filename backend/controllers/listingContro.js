@@ -1,7 +1,6 @@
 const Listing = require("../models/listingmodel");
-
+const User = require("../models/usermodel");
 const createListing = async (req, res) => {
-    //console.log("recived body", req.body);
 
     const { title, description, image, price, country, location } = req.body;
 
@@ -23,6 +22,10 @@ const createListing = async (req, res) => {
             location,
             price
         });
+        // Find the user and add the new listing to their listings array
+        const user = await User.findById(req.user.id);
+        user.listings.push(newListing._id);
+        await user.save(); // Save the updated user
 
         res.status(201).json({
             success: true,
@@ -159,7 +162,7 @@ const deleteListing = async (req, res) => {
 }
 const SearchListing = async (req, res) => {
     const { title } = req.query;
-    
+
     if (!title) {
         return res.status(400).json({
             success: false,
@@ -168,10 +171,10 @@ const SearchListing = async (req, res) => {
     }
 
     try {
-      
+
         const listings = await Listing.find({
             title: { $regex: title, $options: 'i' },
-        }).populate('owner', 'username email');  
+        }).populate('owner', 'username email');
 
 
         if (listings.length === 0) {
@@ -194,6 +197,41 @@ const SearchListing = async (req, res) => {
     }
 };
 
+const UserDetails = async (req, res) => {
+    let id = req.user.id;
+
+    try {
+
+
+        if (!id) {
+            return res.status(404).json({
+                success: false,
+                message: "id not found"
+            });
+        }
+
+        const user = await User.findById(id).populate('listings');
+
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "user not found"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            user,
+        });
+    } catch (err) {
+        res.status(500).json({
+            success: false,
+            message: `something went wrong ${err.message}`
+        });
+    }
+}
+
+
 module.exports = {
     createListing,
     updateListing,
@@ -201,4 +239,5 @@ module.exports = {
     allListings,
     ListingDetails,
     SearchListing,
+    UserDetails
 };
