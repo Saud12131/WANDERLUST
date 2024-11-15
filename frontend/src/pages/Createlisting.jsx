@@ -25,13 +25,13 @@ export default function CreateListing() {
             notify("Please select an image.");
             return;
         }
-    
+
         setLoading(true);
         const data = new FormData();
         data.append("file", file);
         data.append("upload_preset", "wanderlust");
         data.append("cloud_name", "ddx49nwif");
-    
+
         try {
             const response = await axios.post(
                 "https://api.cloudinary.com/v1_1/ddx49nwif/image/upload",
@@ -43,16 +43,16 @@ export default function CreateListing() {
                 image: response.data.secure_url
             }));
             setLoading(false);
-            console.log("Image uploaded successfully:", response.data.secure_url); // Log the URL
+            // console.log("Image uploaded successfully:", response.data.secure_url); // Log the URL
         } catch (error) {
             notify("Image upload failed.");
             setLoading(false);
         }
     };
-    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Submitting formData:", formData); 
+        console.log("Submitting formData:", formData);
         try {
             const token = localStorage.getItem("token");
             const response = await axios.post("http://localhost:3000/api/listings/createlisting",
@@ -62,7 +62,7 @@ export default function CreateListing() {
                         Authorization: `Bearer ${token}`
                     }
                 }
-                
+
             );
             console.log(formData);
             if (response.status === 201) {

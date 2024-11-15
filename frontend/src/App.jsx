@@ -10,6 +10,8 @@ import ProtectedRoute from './auth/routeauth';
 import CreateListing from './pages/Createlisting';
 import SearchResults from './pages/searchresults';
 import UserInfo from './pages/userInfo';
+import BookListing from './pages/booklisting';
+import PaymentPage from './pages/paymentpage';
 function App() {
   return (
     <BrowserRouter>
@@ -45,6 +47,26 @@ function App() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+          path="/booklisting/:id"
+          element={
+            <ProtectedRoute>
+              <BookListing />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/booklisting/:id/payment"
+          element={
+            <ProtectedRoute>
+              <PaymentPage />
+            </ProtectedRoute>
+          }
+        />
+
+
       </Routes>
     </BrowserRouter>
   );

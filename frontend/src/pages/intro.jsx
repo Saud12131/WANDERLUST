@@ -1,10 +1,11 @@
 import React from 'react';
+import { motion } from "framer-motion";
 
 export default function Intro() {
     const token = localStorage.getItem('token');
+
     return (
         <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
-
             <div className="hello">
                 <h1 className="text-4xl font-bold text-blue-600">WELCOME TO WANDERLUST!</h1>
             </div>
@@ -12,29 +13,44 @@ export default function Intro() {
             <div className="buttons">
                 {token ? (
                     <>
-
-                        <button className="px-4 py-2 font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        <motion.button
+                            whileHover={{ scale: 1.1, backgroundColor: "#3b82f6" }}
+                            whileTap={{ scale: 0.9 }}
+                            className="px-4 py-2 font-semibold text-white bg-blue-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        >
                             <a href="/alllistings">All listings</a>
-                        </button>
+                        </motion.button>
+                        
                     </>
                 ) : (
                     <>
-                        <button className="px-4 py-2 font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        <motion.button
+                            whileHover={{ scale: 1.1, backgroundColor: "#3b82f6" }}
+                            whileTap={{ scale: 0.9 }}
+                            className="px-4 py-2 font-semibold text-white bg-blue-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        >
                             <a href="/login">Login</a>
-                        </button>
+                        </motion.button>
                         &nbsp; &nbsp; &nbsp;
-                        <button className="px-4 py-2 font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        <motion.button
+                            whileHover={{ scale: 1.1, backgroundColor: "#3b82f6" }}
+                            whileTap={{ scale: 0.9 }}
+                            className="px-4 py-2 font-semibold text-white bg-blue-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        >
                             <a href="/signup">Signup</a>
-                        </button> &nbsp;
-                        <button className="px-4 py-2 font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400">
+                        </motion.button>
+                        &nbsp;
+                        <motion.button
+                            whileHover={{ scale: 1.1, backgroundColor: "#3b82f6" }}
+                            whileTap={{ scale: 0.9 }}
+                            className="px-4 py-2 font-semibold text-white bg-blue-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        >
                             <a href="/alllistings">All listings</a>
-                        </button>
+                        </motion.button>
                         
                     </>
-
                 )}
             </div>
-
         </div>
     );
 }

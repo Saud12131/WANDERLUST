@@ -7,6 +7,7 @@ const server = http.createServer(app);
 const connectDB = require("./config/connectdb");
 const UserRoute = require('../backend/routes/userroutes');
 const listingRoute = require("../backend/routes/listingRoutes");
+const BookingRoute = require("./routes/bookingRoute");
 const cors = require('cors');
 connectDB();
 app.use(express.json());
@@ -23,3 +24,4 @@ app.get("/", (req, res) => {
 });
 app.use("/api/user", UserRoute);
 app.use("/api/listings", listingRoute);
+app.use("/api/bookings",BookingRoute);

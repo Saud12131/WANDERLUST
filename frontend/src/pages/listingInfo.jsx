@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
- import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 export default function ListingInfo() {
   const [listinginfo, setListingInfo] = useState(null);
   const { id } = useParams();
@@ -83,7 +83,11 @@ export default function ListingInfo() {
                     Delete Listing
                   </button>
                 )}
-                <button className="bg-green-500 text-white py-2 px-4 rounded mt-4 hover:bg-blue-600 transition duration-300 m-2" >BOOK</button>
+                <button className="bg-green-500 text-white py-2 px-4 rounded mt-4 hover:bg-blue-600 transition duration-300 m-2"
+                onClick={()=>{
+                  navigate(`/booklisting/${id}`)
+                }}
+                 >BOOK</button>
               </div>
             </div>
           </>
@@ -92,6 +96,6 @@ export default function ListingInfo() {
         )}
       </div>
       <ToastContainer />
-    </div>
+    </div >
   );
 }
