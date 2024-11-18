@@ -99,7 +99,7 @@ export default function BookListing() {
 
         if (!token) {
             notify("Please log in to proceed.");
-            navigate("/login");  // Redirect to login if token is missing
+            navigate("/login");
             return;
         }
 
@@ -127,6 +127,56 @@ export default function BookListing() {
         }
     };
 
+    const CheckOutHandler = async (req, res) => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            notify("Please log in to proceed.");
+            navigate("/login");
+            return;
+        }
+        const { data: { key } } = await axios.get("http://localhost:3000/api/key", {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        const totalPricetoPay = bookingDetails.totalPricetoPay;
+        const { data: { order } } = await axios.post(
+            "http://localhost:3000/api/payment/checkout",
+            { amount: totalPricetoPay },
+            {
+                headers: {
+                    Authorization: `Bearer ${token}`, // Add Bearer prefix if missing
+                },
+            }
+        );
+        
+
+
+        const options = {
+            key: key,
+            amount: order.amount,
+            currency: "INR",
+            name: "Saud sayyed",
+            description: "Using it for a project",
+            image: "https://thumbs.dreamstime.com/b/card-payment-people-user-icon-card-payment-people-user-icon-vector-illustration-110413349.jpg",
+            order_id: order.id,
+            callback_url: "http://localhost:3000/api/payment/paymentverification",
+            prefill: {
+                name: "Gaurav Kumar",
+                email: "gaurav.kumar@example.com",
+                contact: "9000090000"
+            },
+            notes: {
+                address: "Razorpay Corporate Office"
+            },
+            theme: {
+                color: "#121212"
+            }
+        };
+        const razor = new window.Razorpay(options);
+        razor.open();
+    }
+
     return (
         <div className="max-w-md mx-auto bg-white p-8 border border-gray-300 rounded-lg shadow-lg mt-10">
             <h2 className="text-2xl font-semibold mb-6 text-center">Please Enter Your Booking Details</h2>
@@ -137,6 +187,7 @@ export default function BookListing() {
                         Check-In Date
                     </label>
                     <input
+                        required
                         type="date"
                         id="checkInDate"
                         value={bookingDetails.checkInDate}
@@ -149,6 +200,7 @@ export default function BookListing() {
                         Check-Out Date
                     </label>
                     <input
+                        required
                         type="date"
                         id="checkOutDate"
                         value={bookingDetails.checkOutDate}
@@ -161,6 +213,7 @@ export default function BookListing() {
                         Number of Guests
                     </label>
                     <input
+                        required
                         type="number"
                         id="numOfGuest"
                         value={bookingDetails.numOfGuest}
@@ -169,25 +222,24 @@ export default function BookListing() {
                         className="mt-1 block w-full px-4 py-2 border rounded-md text-gray-700 focus:outline-none focus:ring focus:ring-blue-200"
                     />
                 </div>
-                <button
-                    className="w-full py-2 px-4 bg-green-600 text-white font-semibold rounded-md hover:bg-blue-700 transition duration-300"
-                    onClick={()=>{navigate(`/booklisting/${id}/payment`)}}
-                >
-                    Proceed to Pay
-                </button>
-                <button
+
+                {/* <button
                     type="submit"
                     className="w-full py-2 px-4 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 transition duration-300"
                 >
                    Book listing 
-                </button>
+                </button> */}
             </form>
-            <div>
-          
-                <h3 className='text-2xl font-semibold mb-6 text-center mt-3'>You are booking this listing for  {daysBooked} Days</h3>
-            </div>
+            <button
+                className="w-full py-2 px-4 bg-green-600 text-white font-semibold rounded-md hover:bg-blue-700 transition duration-300"
+                //onClick={()=>{navigate(`/booklisting/${id}/payment`)}}
+                onClick={CheckOutHandler}
+            >
+                Proceed to Pay
+            </button>
             <ToastContainer />
-            <h4>NOTE:- the price will be update when you will select date</h4>
+            <h4 className='mt-3'>NOTE:- the price will be update when you will select date</h4>
         </div>
     );
+
 }

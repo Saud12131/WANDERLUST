@@ -12,6 +12,7 @@ import SearchResults from './pages/searchresults';
 import UserInfo from './pages/userInfo';
 import BookListing from './pages/booklisting';
 import PaymentPage from './pages/paymentpage';
+import PaymentSuccess from './pages/paymentSuccess';
 function App() {
   return (
     <BrowserRouter>
@@ -58,11 +59,21 @@ function App() {
         />
 
         <Route
-          path="/booklisting/:id/payment"
+          path="/booklisting/payment"
           element={
-            <ProtectedRoute>
+           
               <PaymentPage />
-            </ProtectedRoute>
+            
+          }
+        />
+{/* //give it auth afterewards */}
+
+        <Route
+          path="/booklisting/paymentsuccess"
+          element={
+           
+              <PaymentSuccess />
+            
           }
         />
 
