@@ -11,7 +11,6 @@ import CreateListing from './pages/Createlisting';
 import SearchResults from './pages/searchresults';
 import UserInfo from './pages/userInfo';
 import BookListing from './pages/booklisting';
-import PaymentPage from './pages/paymentpage';
 import PaymentSuccess from './pages/paymentSuccess';
 function App() {
   return (
@@ -57,16 +56,6 @@ function App() {
             </ProtectedRoute>
           }
         />
-
-        <Route
-          path="/booklisting/payment"
-          element={
-           
-              <PaymentPage />
-            
-          }
-        />
-{/* //give it auth afterewards */}
 
         <Route
           path="/booklisting/paymentsuccess"

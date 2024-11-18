@@ -10,76 +10,87 @@ const instance = new Razorpay({
 });
 
 const CheckOut = async (req, res) => {
-
     try {
+        const userId = req.user.id;  
+        console.log("User ID in Checkout:", userId);
         const order = await instance.orders.create({
-            amount: Number(req.body.amount * 100),
+            amount: Number(req.body.amount * 100), 
             currency: "INR",
+            notes: {
+                userId: userId, 
+            },
         });
 
         if (!order) {
-            res.status(402).json({
+            return res.status(402).json({
                 success: false,
-                message: "order not found",
+                message: "Order creation failed",
             });
         }
 
         res.status(200).json({
             success: true,
-            message: "order created successfully",
+            message: "Order created successfully",
             order,
         });
     } catch (err) {
-        res.status(402).json({
-            success: true,
-            message: err,
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: err.message,
         });
     }
-
-}
-
+};
 
 const PaymentVerification = async (req, res) => {
-
     try {
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
 
         const body = razorpay_order_id + "|" + razorpay_payment_id;
-
-
         const expectedSignature = crypto.createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
             .update(body.toString())
             .digest('hex');
-        console.log("sig recived", razorpay_signature);
-        console.log("sig genrated", expectedSignature);
 
+      
         const isAuthentic = expectedSignature === razorpay_signature;
-        if (isAuthentic) {
 
+        if (isAuthentic) {
+            
+            const order = await instance.orders.fetch(razorpay_order_id);
+            console.log("Fetched Razorpay Order:", order);
+            const userId = order.notes?.userId; 
+
+            if (!userId) {
+                return res.status(400).json({
+                    success: false,
+                    message: "User ID not found for the payment",
+                });
+            }
+
+         
             await Payment.create({
-                user: req.user.id,
+                user: userId,
                 razorpay_order_id,
                 razorpay_payment_id,
                 razorpay_signature,
-            })
+            });
 
             return res.redirect(`http://localhost:5173/booklisting/paymentsuccess?reference=${razorpay_payment_id}`);
         } else {
-
             return res.status(400).json({
                 success: false,
-                message: "Not authenticated",
+                message: "Payment verification failed. Signature mismatch",
             });
         }
     } catch (err) {
-        // Catch any errors and respond with a failure message
+        console.error(err);
         return res.status(500).json({
             success: false,
             message: err.message,
         });
     }
+};
 
-}
 
 
 

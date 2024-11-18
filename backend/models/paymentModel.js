@@ -12,24 +12,6 @@ const paymentSchema = mongoose.Schema({
     razorpay_signature: {
         type: String,
     },
-    // amount: {
-    //     type: Number,
-    //     required: true,
-    // },
-    // currency: {
-    //     type: String,
-    //     required: true,
-    //     default: "INR",
-    // },
-    // receipt: {
-    //     type: String,
-    // },
-    // status: {
-    //     type: String,
-    //     enum: ["created", "paid", "failed"],
-    //     required: true,
-    //     default: "created",
-    // },
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
