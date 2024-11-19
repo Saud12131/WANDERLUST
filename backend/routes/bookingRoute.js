@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { authentication } = require("../middelware/auth");
-const { CreateBooking } = require('../controllers/bookingController');
+const { CreateBooking, Mybookings } = require('../controllers/bookingController');
 
-router.route("/booklisting").post( authentication, CreateBooking);
-
+router.route("/booklisting").post(authentication, CreateBooking);
+router.route("/mybookings").get(authentication, Mybookings);
 module.exports = router;

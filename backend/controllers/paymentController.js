@@ -41,7 +41,6 @@ const CheckOut = async (req, res) => {
         });
     }
 };
-
 const PaymentVerification = async (req, res) => {
     try {
         const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
@@ -51,14 +50,12 @@ const PaymentVerification = async (req, res) => {
             .update(body.toString())
             .digest('hex');
 
-      
         const isAuthentic = expectedSignature === razorpay_signature;
 
         if (isAuthentic) {
-            
+            // Fetch order to retrieve notes and user ID
             const order = await instance.orders.fetch(razorpay_order_id);
-            console.log("Fetched Razorpay Order:", order);
-            const userId = order.notes?.userId; 
+            const userId = order.notes?.userId;
 
             if (!userId) {
                 return res.status(400).json({
@@ -67,7 +64,7 @@ const PaymentVerification = async (req, res) => {
                 });
             }
 
-         
+            // Save payment details to database
             await Payment.create({
                 user: userId,
                 razorpay_order_id,
@@ -75,7 +72,12 @@ const PaymentVerification = async (req, res) => {
                 razorpay_signature,
             });
 
-            return res.redirect(`http://localhost:5173/booklisting/paymentsuccess?reference=${razorpay_payment_id}`);
+            // Send success response
+            return res.status(200).json({
+                success: true,
+                message: "Payment verified successfully",
+                paymentId: razorpay_payment_id,
+            });
         } else {
             return res.status(400).json({
                 success: false,
