@@ -17,7 +17,7 @@ export default function Login() {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:3000/api/user/login", formData);
-      console.log("logged in ", response);
+     // console.log("logged in ", response);
       if (response.status === 200) {
         let token  = response.data.token;
         localStorage.setItem("token",token);
@@ -25,7 +25,7 @@ export default function Login() {
         navigate("/alllistings");
       }
     } catch (err) {
-      console.log("unable to login ", err.message);
+    //  console.log("unable to login ", err.message);
       notify("Please enter valid details");
     }
   };

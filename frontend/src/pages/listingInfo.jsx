@@ -68,7 +68,7 @@ export default function ListingInfo() {
             <div className="space-y-4">
               <h2 className="text-2xl font-bold text-blue-800">{listinginfo.title}</h2>
               <h2 className='text-xl font-bold text-blue-800'> OWNER:-{listinginfo.owner.username}</h2>
-              <p className="text-lg font-semibold text-blue-600">Price: ${listinginfo.price}</p>
+              <p className="text-lg font-semibold text-blue-600">Price: &#x20b9;{listinginfo.price}</p>
               <p className="text-md text-gray-600">{listinginfo.description}</p>
               <div className="flex flex-col text-blue-700 space-y-2">
                 <p><span className="font-medium">Country:</span> {listinginfo.country}</p>

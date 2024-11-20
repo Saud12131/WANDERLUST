@@ -52,7 +52,7 @@ export default function CreateListing() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("Submitting formData:", formData);
+      //  console.log("Submitting formData:", formData);
         try {
             const token = localStorage.getItem("token");
             const response = await axios.post("http://localhost:3000/api/listings/createlisting",
@@ -64,7 +64,7 @@ export default function CreateListing() {
                 }
 
             );
-            console.log(formData);
+           // console.log(formData);
             if (response.status === 201) {
                 notify("Listing created successfully");
                 navigate("/alllistings");
