@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 
 export default function Intro() {
     const token = localStorage.getItem('token');
+    console.log(token);
 
     return (
         <div className="flex flex-col items-center justify-center h-screen bg-gray-100">
@@ -20,7 +21,7 @@ export default function Intro() {
                         >
                             <a href="/alllistings">All listings</a>
                         </motion.button>
-                        
+
                     </>
                 ) : (
                     <>
@@ -47,7 +48,7 @@ export default function Intro() {
                         >
                             <a href="/alllistings">All listings</a>
                         </motion.button>
-                        
+
                     </>
                 )}
             </div>

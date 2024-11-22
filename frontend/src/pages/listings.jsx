@@ -22,6 +22,7 @@ export default function AllListings() {
                 } else {
                     console.log("Unexpected data format", response.data);
                 }
+                
             } catch (err) {
                 console.log("An error occurred:", err);
                 notify(err.message)
@@ -31,6 +32,7 @@ export default function AllListings() {
 
         fetchData();
     }, []);
+console.log(listings,"listings details");
 
     return (
         <div className='container mx-auto px-6 py-10'>

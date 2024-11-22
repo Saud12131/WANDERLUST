@@ -3,7 +3,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
-import { response } from 'express';
+
 export default function Signup() {
   const [formData, setFormData] = useState({
     username: '',
