@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import Navbar from '../components/navbar';
 
+
 export default function AllListings() {
     const [listings, setListings] = useState([]);
     const navigate = useNavigate();
@@ -23,6 +24,7 @@ export default function AllListings() {
                 }
             } catch (err) {
                 console.log("An error occurred:", err);
+                notify(err.message)
                 setListings([]);
             }
         };

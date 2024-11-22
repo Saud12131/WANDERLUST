@@ -36,7 +36,6 @@ export default function BookListing() {
         }
     }, [bookingDetails.checkInDate, bookingDetails.checkOutDate]);
 
-    // Update Total Price whenever DaysBooked changes
     useEffect(() => {
         if (listingDetails.price && daysBooked > 0) {
             setBookingDetails((prev) => ({
@@ -46,7 +45,7 @@ export default function BookListing() {
         }
     }, [daysBooked, listingDetails.price]);
 
-    // Fetch Listing Details
+
     useEffect(() => {
         const fetchDetails = async () => {
             try {
@@ -70,7 +69,7 @@ export default function BookListing() {
                 }
             } catch (err) {
                 console.error(err);
-                notify("Failed to fetch listing details.");
+                notify(err.message);
             }
         };
 

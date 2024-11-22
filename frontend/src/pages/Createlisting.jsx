@@ -15,7 +15,8 @@ export default function CreateListing() {
     });
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
-
+    const notify = (message) => toast(message);
+    
     const handleChange = (e) => {
         const { id, value } = e.target;
         setFormData({ ...formData, [id]: value });
@@ -46,6 +47,7 @@ export default function CreateListing() {
             // console.log("Image uploaded successfully:", response.data.secure_url); // Log the URL
         } catch (error) {
             notify("Image upload failed.");
+            notify(error.message)
             setLoading(false);
         }
     };
@@ -71,10 +73,10 @@ export default function CreateListing() {
             }
         } catch (err) {
             notify("Please enter correct fields");
+            notify(err.message)
         }
     };
 
-    const notify = (message) => toast(message);
 
     return (
         <div className="main-div mt-16 m-10">

@@ -4,6 +4,7 @@ import axios from 'axios';
 import Navbar from '../components/navbar';
 import { useLocation } from 'react-router-dom';
 
+
 const useQuery = () => {
     return new URLSearchParams(useLocation().search);
 };
@@ -22,6 +23,7 @@ export default function SearchResults() {
                 }
             } catch (err) {
                 console.error("Error fetching search results:", err);
+                notify(err.message)
             }
         };
 

@@ -29,6 +29,7 @@ export default function ListingInfo() {
         }
       } catch (err) {
         console.log("An error occurred:", err);
+        notify(err.message)
         setListingInfo(null);
       }
     };

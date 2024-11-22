@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
+import { response } from 'express';
 export default function Signup() {
   const [formData, setFormData] = useState({
     username: '',
@@ -14,7 +15,8 @@ export default function Signup() {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
-
+  
+  const notify = (message) => toast(message);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -27,10 +29,12 @@ export default function Signup() {
     } catch (err) {
       notify("please enter correct feilds or email already exist");
       console.log("an error occured", err);
+      console.log(response);
+      
+      notify(err.message)
     }
 
   };
-  const notify = (message) => toast(message);
   return (
     <div className="main-div mt-16 m-10">
       <h2 className="text-gray-1500 text-xl font-bold text-center mb-4">Let's Signup</h2>

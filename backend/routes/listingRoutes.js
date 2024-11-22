@@ -3,7 +3,7 @@ const { createListing, allListings, updateListing, deleteListing, ListingDetails
 const router = express.Router();
 const { authentication } = require("../middelware/auth");
 const validate = require("../middelware/validate");
-const { ListingValidation , BookingValidation ,UserValidation , PaymentValidation} = require("../validation/Validations");
+const { ListingValidation } = require("../validation/Validations");
 //routes
 router.route("/createlisting").post(authentication,validate(ListingValidation), createListing);
 router.route("/alllistings").get(allListings);

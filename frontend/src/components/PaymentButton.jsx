@@ -11,20 +11,20 @@ export default function PaymentButton({ bookingDetails, notify }) {
         }
 
         try {
-            // Step 1: Fetch Razorpay key
+            
             const { data: { key } } = await axios.get("http://localhost:3000/api/key", {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
-            // Step 2: Create order
+            
             const { data: { order } } = await axios.post(
                 "http://localhost:3000/api/payment/checkout",
                 { amount: bookingDetails.totalPricetoPay },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
-            console.log(order);
+           // console.log(order);
 
-            // Step 3: Initialize Razorpay
+            
             const options = {
                 key,
                 amount: order.amount,
@@ -55,6 +55,7 @@ export default function PaymentButton({ bookingDetails, notify }) {
         } catch (err) {
             console.error(err);
             notify("Payment failed. Try again.");
+            notify(err.message)
         }
     };
 

@@ -1,4 +1,5 @@
 const Joi = require("joi");
+const User = require("../models/usermodel");
 
 const ListingValidation = Joi.object({
 
@@ -51,26 +52,160 @@ const ListingValidation = Joi.object({
 });
 
 const UserLoginValidation = Joi.object({
-    //write logic here
+
+    email: Joi.string()
+        .min(5)
+        .email({ tlds: { allow: false } })
+        .required()
+        .custom(async (value, helpers) => {
+            const UserExist = await User.findOne({ email: value });
+            if (!UserExist) {
+                return helpers.message('User not found');
+            }
+            return value;
+        })
+        .messages({
+            'string.min': 'please enter correct email address',
+            'any.required': 'Email is required',
+            'string.email': "Please enter a valid email address"
+        }),
+
+    password: Joi.string()
+        .min(3)
+        .max(20)
+        .required()
+        .messages({
+            'string.min': 'the password should be more then 3 characters',
+            'any.required': 'password is required',
+            'string.max': "password is too long"
+        })
+
 });
 
-const UserLogOutinValidation = Joi.object({
-    //write logic here
+
+const NewUserValidation = Joi.object({
+    username: Joi.string()
+        .min(3)
+        .max(20)
+        .required()
+        .custom(async (value, helpers) => {
+            const UserExist = await User.findOne({ username: value });
+            if (UserExist) {
+                return helpers.message('Username already exists');
+            }
+            return value;
+        })
+        .messages({
+            'string.min': 'Country must be at least 3 characters',
+            'string.max': 'keep the username short',
+            'any.required': 'Username is required',
+        }),
+
+    email: Joi.string()
+        .min(5)
+        .email({ tlds: { allow: false } })
+        .required()
+        .messages({
+            'string.min': 'please enter correct email address',
+            'any.required': 'Email is required',
+            'string.email': "Please enter a valid email address"
+        }),
+
+    password: Joi.string()
+        .min(3)
+        .max(20)
+        .required()
+        .messages({
+            'string.min': 'the password should be more then 3 characters',
+            'any.required': 'password is required',
+            'string.max': "password is too long"
+        })
+
 });
 
 
 const BookingValidation = Joi.object({
-    //write logic here
+    user: Joi.string()
+        .pattern(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+            'string.pattern.base': 'Invalid user ID format',
+            'any.required': 'User ID is required',
+        }),
+    listing: Joi.string()
+        .pattern(/^[0-9a-fA-F]{24}$/)
+        .required()
+        .messages({
+            'string.pattern.base': 'Invalid listing ID format',
+            'any.required': 'Listing ID is required',
+        }),
+
+    checkInDate: Joi.date()
+        .required()
+        .messages({
+            'any.required': 'Check-in date is required',
+            'date.base': 'Invalid check-in date format',
+        }),
+    checkOutDate: Joi.date()
+        .greater(Joi.ref('checkInDate'))
+        .required()
+        .messages({
+            'any.required': 'Check-out date is required',
+            'date.base': 'Invalid check-out date format',
+            'date.greater': 'Check-out date must be after the check-in date',
+        }),
+    totalPricetoPay: Joi.number()
+        .min(0)
+        .required()
+        .messages({
+            'number.base': 'Total price to pay must be a number',
+            'number.min': 'Total price to pay must be at least 0',
+            'any.required': 'Total price to pay is required',
+        }),
+    numOfGuest: Joi.number()
+        .integer()
+        .min(1)
+        .required()
+        .messages({
+            'number.base': 'Number of guests must be a number',
+            'number.min': 'Number of guests must be at least 1',
+            'any.required': 'Number of guests is required',
+        }),
 });
 
 
 const PaymentValidation = Joi.object({
-    //write logic here
+    razorpay_order_id: Joi.string()
+        .required()
+        .messages({
+            'string.base': 'Razorpay order ID must be a string',
+            'any.required': 'Razorpay order ID is required',
+        }),
+    razorpay_payment_id: Joi.string()
+        .required()
+        .messages({
+            'string.base': 'Razorpay payment ID must be a string',
+            'any.required':'payment id  is required '
+        }),
+    razorpay_signature: Joi.string()
+        .required()
+        .messages({
+            'string.base': 'Razorpay signature must be a string',
+            'any.required':'signature is required '
+        }),
+    user: Joi.string()
+        .pattern(/^[0-9a-fA-F]{24}$/, 'MongoDB ObjectId')
+        .required()
+        .messages({
+            'string.pattern.base': 'Invalid user ID format.',
+            'any.required': 'User ID is required',
+        }),
 });
 
 module.exports = {
     ListingValidation,
-    UserValidation,
+    UserLoginValidation,
+    NewUserValidation,
     BookingValidation,
     PaymentValidation,
 }

@@ -21,7 +21,7 @@ export default function UserInfo() {
             Authorization: `Bearer ${token}`,
           },
         });
-  
+
         if (response.data.success) {
           setuserInfo(response.data.user);
           setusersListings(response.data.user.listings || []);
@@ -32,21 +32,21 @@ export default function UserInfo() {
             Authorization: `Bearer ${token}`,
           },
         });
-  
+
         const bookingDetails = bookingsResponse.data.BookingDetails;
         setUserBookings(bookingDetails || []);
       } catch (err) {
         console.error("Error fetching details:", err);
-  
+        notify(err.message)
         if (err.response && err.response.status === 401) {
           navigate("/login");
         }
       }
     };
-  
+
     fetchDetails();
   }, [navigate]);
-  
+
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 py-8">
@@ -64,7 +64,7 @@ export default function UserInfo() {
           <h2 className="text-2xl font-semibold mt-4">{userInfo.username}</h2>
           <p className="text-gray-600">{userInfo.email}</p>
         </div>
-  
+
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Your Listings Section */}
           <div className="bg-gray-50 p-6 rounded-lg shadow-md">
@@ -86,7 +86,7 @@ export default function UserInfo() {
               <p className="text-gray-500">No listings available</p>
             )}
           </div>
-  
+
           {/* My Bookings Section */}
           <div className="bg-gray-50 p-6 rounded-lg shadow-md">
             <h3 className="text-xl font-semibold mb-4">My Bookings</h3>
@@ -99,20 +99,20 @@ export default function UserInfo() {
                   >
                     <h4 className="text-lg font-bold">{booking.listing.title}</h4>
                     <span className="font-semibold">Check-in:</span>{" "}
-                    {new Date(booking.checkInDate).toLocaleDateString("en-us",{
-                      year:'numeric',
-                      month:'long',
-                      day:'numeric'
+                    {new Date(booking.checkInDate).toLocaleDateString("en-us", {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
                     })}
                     <br />
                     <span className="font-semibold">Check-Out:</span>{" "}
-                    {new Date(booking.checkOutDate).toLocaleDateString("en-us",{
-                      year:'numeric',
-                      month:'long',
-                      day:'numeric'
+                    {new Date(booking.checkOutDate).toLocaleDateString("en-us", {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric'
                     })}
-                   <h3 className='font-semibold text-lime-400'>Booking Confirmed</h3>
-                    
+                    <h3 className='font-semibold text-lime-400'>Booking Confirmed</h3>
+
                   </li>
                 ))}
               </ul>

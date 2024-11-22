@@ -9,6 +9,7 @@ export default function Login() {
     password: '',
   });
   const navigate = useNavigate();
+  const notify = (message) => toast(message);
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
@@ -27,10 +28,10 @@ export default function Login() {
     } catch (err) {
     //  console.log("unable to login ", err.message);
       notify("Please enter valid details");
+      notify(err.message)
     }
   };
 
-  const notify = (message) => toast(message);
   return (
     <div className="main-div mt-16 m-10">
       <h2 className="text-gray-1500 text-xl font-bold text-center mb-4">Welcome back!</h2>
