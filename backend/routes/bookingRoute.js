@@ -1,10 +1,11 @@
-const express = require('express');
+import express from "express";
+import { authentication } from "../middelware/auth.js"; 
+import { CreateBooking, Mybookings } from "../controllers/bookingController.js"; 
+import validate from "../middelware/validate.js"; 
+import { BookingValidation } from "../validation/Validations.js"; 
+
 const router = express.Router();
-const { authentication } = require("../middelware/auth");
-const { CreateBooking, Mybookings } = require('../controllers/bookingController');
-const validate = require("../middelware/validate");
-const {  BookingValidation } = require("../validation/Validations");
 
 router.route("/booklisting").post(authentication,validate(BookingValidation), CreateBooking);
 router.route("/mybookings").get(authentication, Mybookings);
-module.exports = router;
+export default router;

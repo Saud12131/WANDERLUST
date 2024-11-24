@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function UserInfo() {
   const [userInfo, setuserInfo] = useState({});
   const [usersListings, setusersListings] = useState([]);
   const [UserBookings, setUserBookings] = useState([]);
+  const token = localStorage.getItem('token');
   const navigate = useNavigate();
+  const notify = (message) => toast(message);
+
   useEffect(() => {
     const fetchDetails = async () => {
       try {
@@ -16,6 +20,7 @@ export default function UserInfo() {
           return;
         }
 
+        // Fetch user details (listings)
         const response = await axios.get("http://localhost:3000/api/listings/userdetails", {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -27,17 +32,32 @@ export default function UserInfo() {
           setusersListings(response.data.user.listings || []);
         }
 
-        const bookingsResponse = await axios.get("http://localhost:3000/api/bookings/mybookings", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        // Fetch user's bookings
+        try {
+          const bookingsResponse = await axios.get("http://localhost:3000/api/bookings/mybookings", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
 
-        const bookingDetails = bookingsResponse.data.BookingDetails;
-        setUserBookings(bookingDetails || []);
+          if (bookingsResponse.data && Array.isArray(bookingsResponse.data.BookingDetails)) {
+            setUserBookings(bookingsResponse.data.BookingDetails);
+          } else {
+            setUserBookings([]); 
+          }
+        } catch (err) {
+        
+          if (err.response && err.response.status === 404) {
+            setUserBookings([]);
+            console.log("No bookings found");
+          } else {
+            console.error("Error fetching bookings:", err);
+            setUserBookings([]); 
+          }
+        }
+
       } catch (err) {
         console.error("Error fetching details:", err);
-        notify(err.message)
         if (err.response && err.response.status === 401) {
           navigate("/login");
         }
@@ -46,7 +66,6 @@ export default function UserInfo() {
 
     fetchDetails();
   }, [navigate]);
-
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 py-8">
@@ -122,6 +141,7 @@ export default function UserInfo() {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 }

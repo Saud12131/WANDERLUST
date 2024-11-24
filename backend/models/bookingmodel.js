@@ -1,6 +1,5 @@
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
-
+import mongoose from 'mongoose';
+import { Schema } from 'mongoose';
 const BookingSchema = new Schema({
 
     user: {
@@ -39,4 +38,5 @@ const BookingSchema = new Schema({
 }, {
     timestamps: true,
 })
-module.exports = mongoose.model("Booking", BookingSchema);
+const Booking = mongoose.model("Booking", BookingSchema);
+export default Booking;

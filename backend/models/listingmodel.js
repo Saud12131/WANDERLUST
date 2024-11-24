@@ -1,7 +1,6 @@
-const mongoose = require('mongoose');
-const { Schema } = mongoose;
 
-
+import mongoose from 'mongoose';
+import { Schema } from 'mongoose';
 const listingSchema = new Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
@@ -36,4 +35,5 @@ const listingSchema = new Schema({
     },
 });
 
-module.exports = mongoose.model("Listing", listingSchema);
+const Listing = mongoose.model("Listing", listingSchema);
+export default Listing;

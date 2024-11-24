@@ -1,9 +1,10 @@
-const Listing = require("../models/listingmodel");
-const User = require("../models/usermodel");
+import Listing from "../models/listingmodel.js"
+import User from "../models/usermodel.js"
+
 const createListing = async (req, res) => {
 
     const { title, description, image, price, country, location } = req.body;
-
+    
 
     if (!title || !description || !price || !country || !location || !image) {
         return res.status(400).json({
@@ -22,7 +23,7 @@ const createListing = async (req, res) => {
             location,
             price
         });
-        // Find the user and add the new listing to their listings array
+
         const user = await User.findById(req.user.id);
         user.listings.push(newListing._id);
         await user.save(); // Save the updated user
@@ -32,7 +33,6 @@ const createListing = async (req, res) => {
             message: "Listing added successfully",
             listing: newListing,
         });
-
 
     } catch (err) {
         return res.status(500).json({
@@ -232,7 +232,7 @@ const UserDetails = async (req, res) => {
 }
 
 
-module.exports = {
+export {
     createListing,
     updateListing,
     deleteListing,

@@ -1,34 +1,37 @@
-const express = require("express");
-const app = express();
-const dotenv = require('dotenv');
+import express from "express";
+import dotenv from "dotenv";
+import connectDB from "./config/connectdb.js"; 
+import UserRoute from "../backend/routes/userroutes.js"; 
+import listingRoute from "../backend/routes/listingRoutes.js"; 
+import BookingRoute from "./routes/bookingRoute.js"; 
+import PaymentRoute from "./routes/paymentRoute.js"; 
+import cors from "cors";
+
 dotenv.config();
-const connectDB = require("./config/connectdb");
-const UserRoute = require('../backend/routes/userroutes');
-const listingRoute = require("../backend/routes/listingRoutes");
-const BookingRoute = require("./routes/bookingRoute");
-const PaymentRoute = require('./routes/paymentRoute');
-const cors = require('cors');
+const app = express();
 
 connectDB();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
 app.use(cors({
   origin: 'http://localhost:5173', // Frontend URL
 }));
 
-app.listen(process.env.PORT, () => {
-  console.log(`server listing to port ${process.env.PORT}`);
-});
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.get("/", (req, res) => {
   res.send("server working");
 });
 
-app.get("/api/key", (req, res) => res.status(200).json({ key: process.env.RAZORPAY_KEY_ID }));
+app.get("/api/key", (req, res) =>
+  res.status(200).json({ key: process.env.RAZORPAY_KEY_ID })
+);
 
 app.use("/api/user", UserRoute);
 app.use("/api/listings", listingRoute);
 app.use("/api/bookings", BookingRoute);
 app.use("/api/payment", PaymentRoute);
 
-/// bro i am using cors 
-// using npm start
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});

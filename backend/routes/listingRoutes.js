@@ -1,9 +1,19 @@
-const express = require("express");
-const { createListing, allListings, updateListing, deleteListing, ListingDetails, SearchListing, UserDetails } = require("../controllers/listingContro");
-const router = express.Router();
-const { authentication } = require("../middelware/auth");
-const validate = require("../middelware/validate");
-const { ListingValidation } = require("../validation/Validations");
+import express from "express";
+import {
+    createListing,
+    allListings,
+    updateListing,
+    deleteListing,
+    ListingDetails,
+    SearchListing,
+    UserDetails
+  } from "../controllers/listingContro.js"; // Add .js for ES modules
+  import { authentication } from "../middelware/auth.js"; // Add .js for ES modules
+  import validate from "../middelware/validate.js"; // Add .js for ES modules
+  import { ListingValidation } from "../validation/Validations.js"; // Add .js for ES modules
+  
+  const router = express.Router();
+  
 //routes
 router.route("/createlisting").post(authentication,validate(ListingValidation), createListing);
 router.route("/alllistings").get(allListings);
@@ -14,4 +24,4 @@ router.route("/searchlisting").get(SearchListing);
 router.route("/userdetails").get(authentication, UserDetails);
 
 
-module.exports = router;
+export default router;

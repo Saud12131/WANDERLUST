@@ -1,5 +1,5 @@
-const User = require('../models/usermodel');
-const jwt = require('jsonwebtoken');
+import User  from '../models/usermodel.js';
+import jwt from 'jsonwebtoken';
 
 const Signup = async (req, res) => {
   const { username, email, password } = req.body;
@@ -52,4 +52,4 @@ const Login = async (req, res) => {
   }
 };
 
-module.exports = { Signup, Login };
+export { Signup, Login };

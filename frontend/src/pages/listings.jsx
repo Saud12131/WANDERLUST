@@ -2,12 +2,12 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import Navbar from '../components/navbar';
-
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function AllListings() {
     const [listings, setListings] = useState([]);
     const navigate = useNavigate();
-
+    const notify = (message) => toast(message);
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -32,7 +32,6 @@ export default function AllListings() {
 
         fetchData();
     }, []);
-console.log(listings,"listings details");
 
     return (
         <div className='container mx-auto px-6 py-10'>
@@ -92,6 +91,7 @@ console.log(listings,"listings details");
                     <p>No listings available</p>
                 )}
             </div>
+            <ToastContainer />
         </div>
     );
 }

@@ -1,24 +1,24 @@
-const Joi = require("joi");
-const User = require("../models/usermodel");
 
+import Joi from "joi"
+import User from "../models/usermodel.js";
 const ListingValidation = Joi.object({
 
 
     title: Joi.string()
-        .min(3)
+        .min(1)
         .max(100)
         .required()
         .messages({
-            'string.min': 'Title must be at least 3 characters',
+            'string.min': 'Title must be at least 1 characters',
             'string.max': 'Title can be up to 100 characters',
             'any.required': 'Title is required',
         }),
     description: Joi.string()
-        .min(10)
+        .min(1)
         .max(500)
         .required()
         .messages({
-            'string.min': 'Description must be at least 10 characters',
+            'string.min': 'Description must be at least 1 characters',
             'string.max': 'Description can be up to 500 characters',
             'any.required': 'Description is required',
         }),
@@ -29,10 +29,10 @@ const ListingValidation = Joi.object({
             'string.uri': 'unabel to fetch image',
         }),
     price: Joi.number()
-        .min(100)
+        .min(1)
         .required()
         .messages({
-            'number.min': 'Price must be a greater then 100 number',
+            'number.min': 'Price must be a greater then 1number',
             'any.required': 'Price is required',
         }),
     location: Joi.string()
@@ -125,13 +125,7 @@ const NewUserValidation = Joi.object({
 
 
 const BookingValidation = Joi.object({
-    user: Joi.string()
-        .pattern(/^[0-9a-fA-F]{24}$/)
-        .required()
-        .messages({
-            'string.pattern.base': 'Invalid user ID format',
-            'any.required': 'User ID is required',
-        }),
+  
     listing: Joi.string()
         .pattern(/^[0-9a-fA-F]{24}$/)
         .required()
@@ -202,7 +196,7 @@ const PaymentValidation = Joi.object({
         }),
 });
 
-module.exports = {
+export {
     ListingValidation,
     UserLoginValidation,
     NewUserValidation,

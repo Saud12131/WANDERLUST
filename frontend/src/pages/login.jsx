@@ -28,7 +28,7 @@ export default function Login() {
     } catch (err) {
     //  console.log("unable to login ", err.message);
       notify("Please enter valid details");
-      notify(err.message)
+      //notify(err.message)
     }
   };
 

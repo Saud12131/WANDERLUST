@@ -3,7 +3,6 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
-
 export default function CreateListing() {
     const [formData, setFormData] = useState({
         title: '',
@@ -16,7 +15,7 @@ export default function CreateListing() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const notify = (message) => toast(message);
-    
+
     const handleChange = (e) => {
         const { id, value } = e.target;
         setFormData({ ...formData, [id]: value });
@@ -44,36 +43,39 @@ export default function CreateListing() {
                 image: response.data.secure_url
             }));
             setLoading(false);
-            // console.log("Image uploaded successfully:", response.data.secure_url); // Log the URL
+            console.log("Image uploaded successfully:", formData.image); // Log the URL
         } catch (error) {
             notify("Image upload failed.");
             notify(error.message)
             setLoading(false);
         }
     };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
-      //  console.log("Submitting formData:", formData);
         try {
             const token = localStorage.getItem("token");
-            const response = await axios.post("http://localhost:3000/api/listings/createlisting",
+
+            const response = await axios.post(
+                "http://localhost:3000/api/listings/createlisting",
                 formData,
                 {
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        "Authorization": `Bearer ${token}`,
+
                     }
                 }
-
             );
-           // console.log(formData);
+
             if (response.status === 201) {
                 notify("Listing created successfully");
                 navigate("/alllistings");
             }
+            
+
         } catch (err) {
-            notify("Please enter correct fields");
             notify(err.message)
+            // notify("Error while creating listing");
+            //console.error(err.message); 
         }
     };
 
@@ -111,7 +113,7 @@ export default function CreateListing() {
                     />
                 </div>
                 <div className="mb-6">
-                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="price">
+                    <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="description">
                         Enter description
                     </label>
                     <input

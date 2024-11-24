@@ -1,8 +1,9 @@
-const express = require('express');
-const Razorpay = require('razorpay');
-const crypto = require('crypto');
-const Payment = require("../models/paymentModel");
+import Razorpay from "razorpay";
+import crypto from "crypto";
+import Payment from "../models/paymentModel.js";
+import dotenv from "dotenv";
 
+dotenv.config();
 
 const instance = new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
@@ -95,8 +96,7 @@ const PaymentVerification = async (req, res) => {
 
 
 
-
-module.exports = {
+export {
     CheckOut,
     PaymentVerification
 }

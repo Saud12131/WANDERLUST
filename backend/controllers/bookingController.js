@@ -1,7 +1,8 @@
-const Booking = require("../models/bookingmodel");
-const Listing = require("../models/listingmodel");
-const User = require("../models/usermodel");
-const mongoose = require("mongoose");
+
+import Booking from "../models/bookingmodel.js"
+import Listing from "../models/listingmodel.js"
+import User from "../models/usermodel.js"
+import mongoose from "mongoose";
 const CreateBooking = async (req, res) => {
     const { listing, checkInDate, checkOutDate, totalPricetoPay, numOfGuest } = req.body;
 
@@ -86,13 +87,4 @@ const Mybookings = async (req, res) => {
         });
     }
 };
-
-module.exports = {
-    Mybookings,
-};
-
-
-module.exports = {
-    CreateBooking,
-    Mybookings
-};
+export { CreateBooking, Mybookings };

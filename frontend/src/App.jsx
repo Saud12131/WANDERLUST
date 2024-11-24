@@ -1,7 +1,7 @@
 import './index.css';
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Intro from "./pages/intro";
+import LandingPage from "./pages/LandingPage";
 import Signup from "./pages/signup";
 import Login from "./pages/login";
 import AllListings from './pages/listings';
@@ -12,11 +12,12 @@ import SearchResults from './pages/searchresults';
 import UserInfo from './pages/userInfo';
 import BookListing from './pages/booklisting';
 import PaymentSuccess from './pages/paymentSuccess';
+
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <Routes>
-        <Route index path="/" element={<Intro />}  />
+        <Route index path="/" element={<LandingPage />}  />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/searchresults" element={<SearchResults />} />
@@ -59,14 +60,8 @@ function App() {
 
         <Route
           path="/booklisting/paymentsuccess"
-          element={
-           
-              <PaymentSuccess />
-            
-          }
+          element={<PaymentSuccess />}
         />
-
-
       </Routes>
     </BrowserRouter>
   );
