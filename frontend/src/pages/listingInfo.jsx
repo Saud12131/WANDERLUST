@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
-import { useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
+import { Home, MapPin, IndianRupee, User, Trash2, Book, ArrowBigLeftDash } from 'lucide-react';
+
 export default function ListingInfo() {
   const [listinginfo, setListingInfo] = useState(null);
   const { id } = useParams();
@@ -35,9 +36,8 @@ export default function ListingInfo() {
     };
 
     if (id) fetchData();
-    // console.log(userId);
+  }, [id]);
 
-  }, []);
   const handelDelete = async () => {
     try {
       const token = localStorage.getItem('token');
@@ -53,50 +53,69 @@ export default function ListingInfo() {
       notify(err.message);
     }
   }
+
   return (
-    <div className="bg-blue-50 min-h-screen flex items-center justify-center py-10">
-      <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-xl border border-blue-200">
-        <h1 className="text-4xl font-semibold text-blue-700 mb-6 text-center">Listing Details</h1>
+    <div className="bg-gradient-to-br from-indigo-100 via-purple-100 to-pink-100 min-h-screen flex items-center justify-center py-10 px-4">
+      <div className="bg-white rounded-3xl shadow-xl p-8 w-full max-w-2xl border border-indigo-200">
+      <i><a href="/alllistings"><ArrowBigLeftDash/></a></i>
+        <h1 className="text-3xl font-bold text-indigo-700 mb-6 text-center">Listing Details</h1>
         {listinginfo ? (
-          <>
-            <div className="flex justify-center mb-6">
+          <div className="space-y-6">
+            <div className="flex justify-center">
               <img
                 src={listinginfo.image}
                 alt={listinginfo.title}
-                className="w-64 h-64 object-cover rounded-lg border border-blue-300"
+                className="w-48 h-48 object-cover rounded-2xl border-2 border-indigo-300 shadow-md"
               />
             </div>
             <div className="space-y-4">
-              <h2 className="text-2xl font-bold text-blue-800">{listinginfo.title}</h2>
-              <h2 className='text-xl font-bold text-blue-800'> OWNER:-{listinginfo.owner.username}</h2>
-              <p className="text-lg font-semibold text-blue-600">Price: &#x20b9;{listinginfo.price}</p>
-              <p className="text-md text-gray-600">{listinginfo.description}</p>
-              <div className="flex flex-col text-blue-700 space-y-2">
-                <p><span className="font-medium">Country:</span> {listinginfo.country}</p>
-                <p><span className="font-medium">Location:</span> {listinginfo.location}</p>
+              <h2 className="text-2xl font-bold text-indigo-800 flex items-center">
+                <Home className="mr-2 text-indigo-600" /> {listinginfo.title}
+              </h2>
+              <div className="flex items-center text-indigo-600 text-lg">
+                <User className="mr-2" />
+                <span className="font-semibold">Owner:</span>
+                <span className="ml-2">{listinginfo.owner.username}</span>
               </div>
-              <div>
+              <p className="text-xl font-semibold text-purple-600 flex items-center">
+                <IndianRupee className="mr-2" /> {listinginfo.price}
+              </p>
+              <p className="text-md text-gray-700 bg-indigo-50 p-4 rounded-xl border border-indigo-100">
+                {listinginfo.description}
+              </p>
+              <div className="flex flex-col text-indigo-700 space-y-2 bg-purple-50 p-4 rounded-xl border border-purple-200">
+                <p className="flex items-center">
+                  <MapPin className="mr-2 text-purple-600" />
+                  <span className="font-medium">Location:</span>
+                  <span className="ml-2">{listinginfo.location}, {listinginfo.country}</span>
+                </p>
+              </div>
+              <div className="flex justify-between items-center mt-6">
                 {listinginfo.owner._id === userId && (
                   <button
                     onClick={handelDelete}
-                    className="bg-red-500 text-white py-2 px-4 rounded mt-4 hover:bg-blue-600 transition duration-300 m-2"
+                    className="bg-pink-500 text-white py-2 px-4 rounded-full text-sm font-semibold hover:bg-pink-600 transition duration-300 flex items-center"
                   >
-                    Delete Listing
+                    <Trash2 className="mr-2 h-4 w-4" /> Delete Listing
                   </button>
                 )}
-                <button className="bg-green-500 text-white py-2 px-4 rounded mt-4 hover:bg-blue-600 transition duration-300 m-2"
-                onClick={()=>{
-                  navigate(`/booklisting/${id}`)
-                }}
-                 >BOOK</button>
+                <button 
+                  className="bg-indigo-500 text-white py-2 px-4 rounded-full text-sm font-semibold hover:bg-indigo-600 transition duration-300 flex items-center"
+                  onClick={() => navigate(`/booklisting/${id}`)}
+                >
+                  <Book className="mr-2 h-4 w-4" /> Book Now
+                </button>
               </div>
             </div>
-          </>
+          </div>
         ) : (
-          <p className="text-gray-500 text-center">Loading listing details...</p>
+          <div className="flex justify-center items-center h-64">
+            <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-indigo-500"></div>
+          </div>
         )}
       </div>
       <ToastContainer />
-    </div >
+    </div>
   );
 }
+

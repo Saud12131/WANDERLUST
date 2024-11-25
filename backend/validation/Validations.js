@@ -187,13 +187,7 @@ const PaymentValidation = Joi.object({
             'string.base': 'Razorpay signature must be a string',
             'any.required':'signature is required '
         }),
-    user: Joi.string()
-        .pattern(/^[0-9a-fA-F]{24}$/, 'MongoDB ObjectId')
-        .required()
-        .messages({
-            'string.pattern.base': 'Invalid user ID format.',
-            'any.required': 'User ID is required',
-        }),
+  
 });
 
 export {

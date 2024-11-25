@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import BookingForm from '../components/BookingForm';
 import PaymentButton from '../components/PaymentButton';
 import BookingSummary from '../components/BookingSummery';
-
+import {  ArrowBigLeftDash,} from 'lucide-react';
 export default function BookListing() {
     const [listingDetails, setListingDetails] = useState({});
     const [bookingDetails, setBookingDetails] = useState({
@@ -84,6 +84,7 @@ export default function BookListing() {
 
     return (
         <div className="max-w-md mx-auto bg-white p-8 border border-gray-300 rounded-lg shadow-lg mt-10">
+            <i><a href="/alllistings"><ArrowBigLeftDash/></a></i>
             <h2 className="text-2xl font-semibold mb-6 text-center">Booking Details</h2>
              <BookingSummary totalPrice={bookingDetails.totalPricetoPay} /> 
             <BookingForm bookingDetails={bookingDetails} handleInputChange={handleInputChange} />

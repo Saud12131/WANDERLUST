@@ -12,7 +12,7 @@ import SearchResults from './pages/searchresults';
 import UserInfo from './pages/userInfo';
 import BookListing from './pages/booklisting';
 import PaymentSuccess from './pages/paymentSuccess';
-
+import MyBookings from './pages/MyBookings';
 function App() {
   return (
     <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
@@ -45,6 +45,14 @@ function App() {
           element={
             <ProtectedRoute>
               <ListingInfo />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/mybookings"
+          element={
+            <ProtectedRoute>
+              <MyBookings />
             </ProtectedRoute>
           }
         />

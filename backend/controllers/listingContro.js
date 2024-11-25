@@ -4,7 +4,7 @@ import User from "../models/usermodel.js"
 const createListing = async (req, res) => {
 
     const { title, description, image, price, country, location } = req.body;
-    
+
 
     if (!title || !description || !price || !country || !location || !image) {
         return res.status(400).json({
@@ -27,6 +27,7 @@ const createListing = async (req, res) => {
         const user = await User.findById(req.user.id);
         user.listings.push(newListing._id);
         await user.save(); // Save the updated user
+        
 
         res.status(201).json({
             success: true,

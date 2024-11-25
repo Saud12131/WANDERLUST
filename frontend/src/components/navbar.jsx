@@ -34,7 +34,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-300">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-slate-300 rounded-2xl">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
@@ -46,7 +46,7 @@ const Navbar = () => {
           >
 
             <Link to="/" className="text-2xl font-bold text-blue-500">
-            <i class="fa-solid fa-route mr-4"></i>
+            <i className="fa-solid fa-route mr-4"></i>
             </Link>
              <Link to="/" className="text-2xl font-bold text-blue-500">
              Wanderlust
@@ -76,8 +76,8 @@ const Navbar = () => {
                   <NavLink to="/newlisting" className="bg-blue-500 text-white px-4 py-2 rounded-md transition duration-300 hover:bg-sky-500">
                     Create Listing
                   </NavLink>
-                  <NavLink to="/alllistings" className="bg-blue-500 text-white px-4 py-2 rounded-md transition duration-300 hover:bg-sky-500">
-                    All Listings
+                  <NavLink to="/mybookings" className="bg-blue-500 text-white px-4 py-2 rounded-md transition duration-300 hover:bg-sky-500">
+                    My bookings
                   </NavLink>
                   <NavLink to="/userinfo" className="text-blue-500 hover:bg-sky-500">
                     <i className="fas fa-user text-blue-500"></i>
@@ -159,10 +159,10 @@ const Navbar = () => {
               <MobileNavLink to="/newlisting" onClick={() => setIsMobileMenuOpen(false)} className="bg-blue-500 text-white px-4 py-2 rounded-md transition duration-300 hover:bg-sky-500">
                 Create Listing
               </MobileNavLink>
-              <MobileNavLink to="/alllistings" onClick={() => setIsMobileMenuOpen(false)} className="bg-blue-500 text-white px-4 py-2 rounded-md transition duration-300 hover:bg-sky-500">
-                All Listings
+              <MobileNavLink to="/mybookings" onClick={() => setIsMobileMenuOpen(false)} className="bg-blue-500 text-white px-4 py-2 rounded-md transition duration-300 hover:bg-sky-500">
+               My bookings
               </MobileNavLink>
-              <MobileNavLink to="/userinfo" onClick={() => setIsMobileMenuOpen(false)} className="text-teal-600 hover:bg-sky-500">
+              <MobileNavLink to="/userinfo" onClick={() => setIsMobileMenuOpen(false)} className="text-teal-600 bg-blue-500 text-white  hover:bg-sky-500">
                 <i className="fas fa-user mr-2"></i> Profile
               </MobileNavLink>
               <motion.button

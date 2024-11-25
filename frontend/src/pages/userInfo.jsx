@@ -2,11 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
+import { User, MapPin, List, IndianRupee,  ArrowBigLeftDash,} from 'lucide-react';
+
 
 export default function UserInfo() {
   const [userInfo, setuserInfo] = useState({});
   const [usersListings, setusersListings] = useState([]);
-  const [UserBookings, setUserBookings] = useState([]);
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
   const notify = (message) => toast(message);
@@ -32,30 +33,6 @@ export default function UserInfo() {
           setusersListings(response.data.user.listings || []);
         }
 
-        // Fetch user's bookings
-        try {
-          const bookingsResponse = await axios.get("http://localhost:3000/api/bookings/mybookings", {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          });
-
-          if (bookingsResponse.data && Array.isArray(bookingsResponse.data.BookingDetails)) {
-            setUserBookings(bookingsResponse.data.BookingDetails);
-          } else {
-            setUserBookings([]); 
-          }
-        } catch (err) {
-        
-          if (err.response && err.response.status === 404) {
-            setUserBookings([]);
-            console.log("No bookings found");
-          } else {
-            console.error("Error fetching bookings:", err);
-            setUserBookings([]); 
-          }
-        }
-
       } catch (err) {
         console.error("Error fetching details:", err);
         if (err.response && err.response.status === 401) {
@@ -68,76 +45,58 @@ export default function UserInfo() {
   }, [navigate]);
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 py-8">
-      <div className="bg-zinc-400 p-8 rounded-lg shadow-lg w-full max-w-6xl">
-
-        <div className="flex flex-col items-center mb-6">
-          <img
-            src={
-              userInfo.pic ||
-              'https://i.pinimg.com/originals/68/0e/24/680e241336ae8d3a57a42f54b656e58f.jpg'
-            }
-            alt="User profile"
-            className="h-24 w-24 rounded-full object-cover"
-          />
-          <h2 className="text-2xl font-semibold mt-4">{userInfo.username}</h2>
-          <p className="text-gray-600">{userInfo.email}</p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Your Listings Section */}
-          <div className="bg-gray-50 p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-semibold mb-4">Your Listings</h3>
-            {usersListings.length > 0 ? (
-              <ul className="space-y-4">
-                {usersListings.map((listing, index) => (
-                  <li
-                    key={index}
-                    className="p-4 bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md"
-                  >
-                    <h4 className="text-lg font-bold">{listing.title}</h4>
-                    <p className="text-gray-700">{listing.description}</p>
-                    <p className="text-gray-900 font-bold mt-2">{listing.price} USD</p>
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-gray-500">No listings available</p>
-            )}
+    <div className="min-h-screen bg-gradient-to-b from-sky-100 to-white py-6 px-4 sm:px-6 lg:px-8">
+      <i><a href="alllistings"> <ArrowBigLeftDash/></a></i>
+      <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden">
+        <div className="md:flex">
+          <div className="md:flex-shrink-0 bg-sky-500 md:w-48 flex flex-col items-center justify-center p-4">
+            <img
+              src={
+                userInfo.pic ||
+                'https://i.pinimg.com/originals/68/0e/24/680e241336ae8d3a57a42f54b656e58f.jpg'
+              }
+              alt="User profile"
+              className="h-24 w-24 rounded-full object-cover border-2 border-white shadow-md"
+            />
+            <h2 className="mt-2 text-lg font-semibold text-white">{userInfo.username}</h2>
+            <p className="mt-1 text-sm text-sky-100">{userInfo.email}</p>
           </div>
-
-          {/* My Bookings Section */}
-          <div className="bg-gray-50 p-6 rounded-lg shadow-md">
-            <h3 className="text-xl font-semibold mb-4">My Bookings</h3>
-            {UserBookings.length > 0 ? (
-              <ul className="space-y-4">
-                {UserBookings.map((booking, index) => (
-                  <li
-                    key={index}
-                    className="p-4 bg-white rounded-lg border border-gray-200 shadow-sm hover:shadow-md"
-                  >
-                    <h4 className="text-lg font-bold">{booking.listing.title}</h4>
-                    <span className="font-semibold">Check-in:</span>{" "}
-                    {new Date(booking.checkInDate).toLocaleDateString("en-us", {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                    <br />
-                    <span className="font-semibold">Check-Out:</span>{" "}
-                    {new Date(booking.checkOutDate).toLocaleDateString("en-us", {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric'
-                    })}
-                    <h3 className='font-semibold text-lime-400'>Booking Confirmed</h3>
-
-                  </li>
-                ))}
-              </ul>
-            ) : (
-              <p className="text-gray-500">No bookings available</p>
-            )}
+          <div className="p-4 w-full">
+            <div className="mb-4">
+              <h3 className="text-xl font-semibold text-sky-800 mb-2 flex items-center">
+                <User className="mr-2 h-5 w-5" /> Your Profile
+              </h3>
+              <div className="bg-sky-50 p-3 rounded-md shadow-sm">
+                <p className="text-sm text-sky-800"><span className="font-semibold">Username:</span> {userInfo.username}</p>
+                <p className="text-sm text-sky-800 mt-1"><span className="font-semibold">Email:</span> {userInfo.email}</p>
+              </div>
+            </div>
+            <div>
+              <h3 className="text-xl font-semibold text-sky-800 mb-2 flex items-center">
+                <List className="mr-2 h-5 w-5" /> Your Listings
+              </h3>
+              {usersListings.length > 0 ? (
+                <ul className="space-y-3">
+                  {usersListings.map((listing, index) => (
+                    <li
+                      key={index}
+                      className="bg-white p-3 rounded-md shadow-sm hover:shadow-md transition duration-300 border border-sky-100"
+                    >
+                      <h4 className="text-base font-bold text-sky-700 mb-1">{listing.title}</h4>
+                      <p className="text-xs text-gray-600 mb-1 flex items-center">
+                        <MapPin className="mr-1 h-3 w-3" /> {listing.location || 'Location not specified'}
+                      </p>
+                      <p className="text-sm text-gray-700 mb-1 line-clamp-2">{listing.description}</p>
+                      <p className="text-sm text-sky-600 font-bold flex items-center">
+                        <IndianRupee className="mr-1 h-4 w-4" /> {listing.price} INR
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="text-sm text-gray-500 bg-sky-50 p-2 rounded-md">No listings available</p>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -145,3 +104,4 @@ export default function UserInfo() {
     </div>
   );
 }
+

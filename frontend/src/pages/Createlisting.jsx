@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
+import {  ArrowBigLeftDash,} from 'lucide-react';
 export default function CreateListing() {
     const [formData, setFormData] = useState({
         title: '',
@@ -82,6 +83,7 @@ export default function CreateListing() {
 
     return (
         <div className="main-div mt-16 m-10">
+            <i><a href="/alllistings"><ArrowBigLeftDash/></a></i>
             <h2 className="text-gray-1500 text-xl font-bold text-center mb-4">Create Listing</h2>
             <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 border border-blue-300">
                 <div className="mb-4">

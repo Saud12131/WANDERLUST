@@ -1,6 +1,6 @@
-const mongoose = require('mongoose');
-const Listing = require('./models/listingmodel') // Adjust the path to your Listing model
 
+import mongoose from 'mongoose';
+import Listing from './models/listingmodel.js';
 mongoose.connect('mongodb+srv://saudsayyed59:ocVLcEWliIysYxM5@todo-app.ogepf.mongodb.net/?retryWrites=true&w=majority&appName=TODO-APP', {
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -11,162 +11,136 @@ mongoose.connect('mongodb+srv://saudsayyed59:ocVLcEWliIysYxM5@todo-app.ogepf.mon
 });
 
 const demoListings = [
-
-    {
-        owner: '671ea0f629e94af52d7ab460',
-        title: 'Modern Villa with Pool',
-        description: 'A luxurious villa with a private pool and modern amenities.',
-        image: 'https://tse4.mm.bing.net/th?id=OIP.0Cf3z9U6wCTUSsWWsQD2MgHaHg&pid=Api&P=0&h=180',
-        price: 450000,
-        country: 'Spain',
-        location: 'Marbella'
-    },
-    {
-        owner: '671ea0f629e94af52d7ab460',
-        title: 'Charming Country Cottage',
-        description: 'A quaint cottage surrounded by beautiful countryside.',
-        image: 'https://tse4.mm.bing.net/th?id=OIP.0Cf3z9U6wCTUSsWWsQD2MgHaHg&pid=Api&P=0&h=180',
-        price: 120000,
-        country: 'France',
-        location: 'Provence'
-    },
-    {
-        owner: '671ea0f629e94af52d7ab460',
-        title: 'City Apartment with Skyline View',
-        description: 'An upscale apartment with a breathtaking view of the city skyline.',
-        image: 'https://tse4.mm.bing.net/th?id=OIP.0Cf3z9U6wCTUSsWWsQD2MgHaHg&pid=Api&P=0&h=180',
-        price: 350000,
-        country: 'USA',
-        location: 'New York City'
-    },
-    {
-        owner: '671ea0f629e94af52d7ab460',
-        title: 'Beachfront Bungalow',
-        description: 'A beautiful bungalow located right on the beach.',
-        image: 'https://tse4.mm.bing.net/th?id=OIP.0Cf3z9U6wCTUSsWWsQD2MgHaHg&pid=Api&P=0&h=180',
-        price: 500000,
-        country: 'Australia',
-        location: 'Gold Coast'
-    },
-    {
-        owner: '671ea0f629e94af52d7ab460',
-        title: 'Historic Manor House',
-        description: 'A large historic house with antique features and a grand garden.',
-        image: 'https://tse4.mm.bing.net/th?id=OIP.0Cf3z9U6wCTUSsWWsQD2MgHaHg&pid=Api&P=0&h=180',
-        price: 750000,
-        country: 'UK',
-        location: 'Cotswolds'
-    },
-    {
-        owner: '671ea0f629e94af52d7ab460',
-        title: 'Modern Studio Apartment',
-        description: 'A compact studio perfect for urban living.',
-        image: 'https://tse4.mm.bing.net/th?id=OIP.0Cf3z9U6wCTUSsWWsQD2MgHaHg&pid=Api&P=0&h=180',
-        price: 95000,
-        country: 'Japan',
-        location: 'Tokyo'
-    },
-    {
-        owner: '671ea0f629e94af52d7ab460',
-        title: 'Luxury Penthouse Suite',
-        description: 'A top-floor penthouse with stunning city views and luxury finishes.',
-        image: 'https://tse4.mm.bing.net/th?id=OIP.0Cf3z9U6wCTUSsWWsQD2MgHaHg&pid=Api&P=0&h=180',
-        price: 1200000,
-        country: 'Singapore',
-        location: 'Marina Bay'
-    },
-    {
-        owner: '671ea0f629e94af52d7ab460',
-        title: 'Cozy Mountain Cabin',
-        description: 'A rustic cabin nestled in the mountains for a peaceful retreat.',
-        image: 'https://tse4.mm.bing.net/th?id=OIP.0Cf3z9U6wCTUSsWWsQD2MgHaHg&pid=Api&P=0&h=180',
-        price: 180000,
-        country: 'Canada',
-        location: 'Banff'
-    },
-    {
-        owner: '671ea0f629e94af52d7ab460',
-        title: 'Spacious Family Home',
-        description: 'A large family home with multiple bedrooms and a spacious backyard.',
-        image: 'https://tse4.mm.bing.net/th?id=OIP.0Cf3z9U6wCTUSsWWsQD2MgHaHg&pid=Api&P=0&h=180',
-        price: 320000,
-        country: 'USA',
-        location: 'San Diego'
-    },
-    {
-        owner: '671ea0f629e94af52d7ab460',
-        title: 'Elegant Loft in Historic District',
-        description: 'A stylish loft located in a historic part of the city.',
-        image: 'https://tse4.mm.bing.net/th?id=OIP.0Cf3z9U6wCTUSsWWsQD2MgHaHg&pid=Api&P=0&h=180',
-        price: 260000,
-        country: 'Italy',
-        location: 'Florence'
-    },
-    {
-        owner: '671ea0f629e94af52d7ab460',
-        title: 'Serene Lakeside Villa',
-        description: 'A peaceful villa with stunning views of the lake.',
-        image: 'https://tse4.mm.bing.net/th?id=OIP.0Cf3z9U6wCTUSsWWsQD2MgHaHg&pid=Api&P=0&h=180',
-        price: 540000,
-        country: 'Switzerland',
-        location: 'Lake Geneva'
-    },
-    {
-        owner: '671ea0f629e94af52d7ab460',
-        title: 'Artistic Loft with City Views',
-        description: 'A unique loft with an artistic vibe and panoramic city views.',
-        image: 'https://tse4.mm.bing.net/th?id=OIP.0Cf3z9U6wCTUSsWWsQD2MgHaHg&pid=Api&P=0&h=180',
-        price: 300000,
-        country: 'Netherlands',
-        location: 'Amsterdam'
-    },
-    {
-        owner: '671ea0f629e94af52d7ab460',
-        title: 'Secluded Desert Home',
-        description: 'A private home in the desert with amazing views.',
-        image: 'https://tse4.mm.bing.net/th?id=OIP.0Cf3z9U6wCTUSsWWsQD2MgHaHg&pid=Api&P=0&h=180',
-        price: 220000,
-        country: 'USA',
-        location: 'Arizona'
-    },
-    {
-        owner: '671ea0f629e94af52d7ab460',
-        title: 'Contemporary Urban Apartment',
-        description: 'A chic apartment with modern decor and amenities.',
-        image: 'https://tse4.mm.bing.net/th?id=OIP.0Cf3z9U6wCTUSsWWsQD2MgHaHg&pid=Api&P=0&h=180',
-        price: 280000,
-        country: 'Germany',
-        location: 'Berlin'
-    },
-    {
-        owner: '671ea0f629e94af52d7ab460',
-        title: 'Traditional Family House',
-        description: 'A classic home with traditional architecture and a lovely garden.',
-        image: 'https://tse4.mm.bing.net/th?id=OIP.0Cf3z9U6wCTUSsWWsQD2MgHaHg&pid=Api&P=0&h=180',
-        price: 310000,
-        country: 'Ireland',
-        location: 'Dublin'
-    },
-    {
-        owner: '671ea0f629e94af52d7ab460',
-        title: 'Bright Studio Near Beach',
-        description: 'A compact and bright studio just a short walk from the beach.',
-        image: 'https://tse4.mm.bing.net/th?id=OIP.0Cf3z9U6wCTUSsWWsQD2MgHaHg&pid=Api&P=0&h=180',
-        price: 150000,
-        country: 'Greece',
-        location: 'Santorini'
-    },
-    {
-        owner: '671ea0f629e94af52d7ab460',
-        title: 'Scenic Cabin in the Woods',
-        description: 'A cozy cabin surrounded by tall trees and natural beauty.',
-        image: 'https://tse4.mm.bing.net/th?id=OIP.0Cf3z9U6wCTUSsWWsQD2MgHaHg&pid=Api&P=0&h=180',
-        price: 180000,
-        country: 'Finland',
-        location: 'Lapland'
-    },
-
-
+    
+    
+        {
+            "title": "Luxury Villa with Pool",
+            "description": "A spacious luxury villa with a private pool and garden. Perfect for families or groups.",
+            "image": "https://tse2.mm.bing.net/th?id=OIP.iWVc6qQ3bREAI53jeGDbhAHaEK&pid=Api&P=0&h=180",
+            "price": 450,
+            "country": "Italy",
+            "location": "Amalfi Coast",
+            "owner": "671fdfc24e981d3d37d82925"
+        },
+        {
+            "title": "Modern Apartment in the City",
+            "description": "A stylish apartment in the heart of the city. Ideal for couples or business travelers.",
+            "image": "https://tse2.mm.bing.net/th?id=OIP.11y56p4CoiREyeuyfGD_egHaGM&pid=Api&P=0&h=180",
+            "price": 120,
+            "country": "USA",
+            "location": "New York",
+            "owner": "671fdfc24e981d3d37d82925"
+        },
+        {
+            "title": "Cozy Beach House",
+            "description": "Enjoy a cozy stay at this beach house with stunning ocean views.",
+            "image": "https://tse2.mm.bing.net/th?id=OIP.kHKbwec7HpNmbauwmQNc1AHaE8&pid=Api&P=0&h=180",
+            "price": 300,
+            "country": "Australia",
+            "location": "Bondi Beach",
+            "owner": "671fdfc24e981d3d37d82925"
+        },
+        {
+            "title": "Charming Countryside Cottage",
+            "description": "Escape the city and relax in this charming countryside cottage.",
+            "image": "https://tse3.mm.bing.net/th?id=OIP._l9Rp9zNqGcfKRHcDn6uigHaE7&pid=Api&P=0&h=180",
+            "price": 150,
+            "country": "France",
+            "location": "Provence",
+            "owner": "671fdfc24e981d3d37d82925"
+        },
+        {
+            "title": "Penthouse Suite with Skyline Views",
+            "description": "Experience luxury in this penthouse suite with breathtaking skyline views.",
+            "image": "https://tse3.mm.bing.net/th?id=OIP.xJalfRSKHf0gKCg9GZM2-AHaE8&pid=Api&P=0&h=180",
+            "price": 600,
+            "country": "UAE",
+            "location": "Dubai",
+            "owner": "671fdfc24e981d3d37d82925"
+        },
+        {
+            "title": "Rustic Mountain Cabin",
+            "description": "A rustic cabin nestled in the mountains, perfect for outdoor enthusiasts.",
+            "image": "https://tse4.mm.bing.net/th?id=OIP.FTECvVpaPvT_baSPbsgCAgHaFS&pid=Api&P=0&h=180",
+            "price": 200,
+            "country": "Canada",
+            "location": "Banff",
+            "owner": "671fdfc24e981d3d37d82925"
+        },
+        {
+            "title": "Sunny Beachfront Villa",
+            "description": "Relax in this sunny beachfront villa with direct access to the shore.",
+            "image": "https://tse3.mm.bing.net/th?id=OIP.95VfV2d1b6oEl_nT2FcS-QHaDi&pid=Api&P=0&h=180",
+            "price": 500,
+            "country": "Spain",
+            "location": "Barcelona",
+            "owner": "671fdfc24e981d3d37d82925"
+        },
+        {
+            "title": "Urban Loft",
+            "description": "A trendy loft located in the vibrant downtown area.",
+            "image": "https://tse2.mm.bing.net/th?id=OIP.NtueZ5nXHlW8mm1wYwi_KwHaE7&pid=Api&P=0&h=180",
+            "price": 180,
+            "country": "Germany",
+            "location": "Berlin",
+            "owner": "671fdfc24e981d3d37d82925"
+        },
+        {
+            "title": "Lakefront Cabin",
+            "description": "A quiet retreat by the lake with breathtaking views and serene surroundings.",
+            "image": "https://tse1.mm.bing.net/th?id=OIP.6ccPiVsjbO-ZEy8Y2ESNPgHaE8&pid=Api&P=0&h=180",
+            "price": 220,
+            "country": "Switzerland",
+            "location": "Zurich",
+            "owner": "671fdfc24e981d3d37d82925"
+        },
+        {
+            "title": "Tropical Island Bungalow",
+            "description": "Stay in a private bungalow surrounded by tropical greenery.",
+            "image": "https://tse1.mm.bing.net/th?id=OIP.kX4REAepkmvw-W1wLBZJDQHaFK&pid=Api&P=0&h=180",
+            "price": 400,
+            "country": "Thailand",
+            "location": "Phuket",
+            "owner": "671fdfc24e981d3d37d82925"
+        },
+        {
+            "title": "Vintage Farmhouse",
+            "description": "A cozy vintage farmhouse with modern amenities.",
+            "image": "https://tse3.mm.bing.net/th?id=OIP.YvpJqhk4_1_WwjO0BpNsJgHaE7&pid=Api&P=0&h=180",
+            "price": 160,
+            "country": "USA",
+            "location": "Texas",
+            "owner": "671fdfc24e981d3d37d82925"
+        },
+        {
+            "title": "Modern Condo",
+            "description": "An elegant condo located near major attractions.",
+            "image": "https://tse4.mm.bing.net/th?id=OIP.OzAWmF9XqdntY-fkDprWcwHaE7&pid=Api&P=0&h=180",
+            "price": 300,
+            "country": "Singapore",
+            "location": "Marina Bay",
+            "owner": "671fdfc24e981d3d37d82925"
+        },
+        {
+            "title": "Hillside Villa",
+            "description": "A villa perched on the hills with panoramic views of the valley.",
+            "image": "https://tse4.mm.bing.net/th?id=OIP.XzHrN4VGo3GHc7frYfRsOQHaEA&pid=Api&P=0&h=180",
+            "price": 500,
+            "country": "Brazil",
+            "location": "Rio de Janeiro",
+            "owner": "671fdfc24e981d3d37d82925"
+        },
+        {
+            "title": "Classic Apartment",
+            "description": "A classic-style apartment with all modern facilities.",
+            "image": "https://tse1.mm.bing.net/th?id=OIP.SDe5ggyQk1lQPFYDRqrNJwHaEK&pid=Api&P=0&h=180",
+            "price": 140,
+            "country": "Italy",
+            "location": "Rome",
+            "owner": "671fdfc24e981d3d37d82925"
+        }
+    
+    
 ];
 
 const seedDB = async () => {

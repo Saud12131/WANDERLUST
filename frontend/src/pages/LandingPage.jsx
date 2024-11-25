@@ -59,12 +59,12 @@ export default function LandingPage() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              <Link 
+              <a 
                 href="/signup"
                 className="px-6 py-3 bg-white text-blue-600 font-semibold rounded-full shadow-lg hover:bg-blue-100 transition duration-300 ease-in-out"
               >
                 Signup
-              </Link>
+              </a>
             </motion.div>
             <motion.div
               whileHover={{ scale: 1.05 }}
