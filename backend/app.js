@@ -12,7 +12,7 @@ const app = express();
 
 connectDB();
 app.use(cors({
-  origin: 'http://localhost:5173', // Frontend URL
+  origin: 'http://localhost:5173',
 }));
 
 app.use(express.json());
@@ -44,3 +44,5 @@ app.use((err, req, res, next) => {
     message: err.message || "Internal Server Error",
   });
 });
+
+export default app;
