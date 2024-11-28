@@ -1,3 +1,7 @@
-text
-node_modules
+# Node modules
+frontend/node_modules/
+backend/node_modules/
+
+# Environment variabels
+frontend/.env
 backend/.env
