@@ -13,6 +13,7 @@ import UserInfo from './pages/userInfo';
 import BookListing from './pages/booklisting';
 import PaymentSuccess from './pages/paymentSuccess';
 import MyBookings from './pages/MyBookings';
+import NotFound from './pages/NotFound';
 function App() {
   return (
     <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
@@ -22,6 +23,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/searchresults" element={<SearchResults />} />
         <Route path="/alllistings" element={<AllListings />} />
+        <Route path="*" element={<NotFound />} />
 
         <Route
           path="/userinfo"

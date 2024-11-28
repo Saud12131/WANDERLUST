@@ -44,7 +44,7 @@ export default function CreateListing() {
                 image: response.data.secure_url
             }));
             setLoading(false);
-            console.log("Image uploaded successfully:", formData.image); // Log the URL
+           // console.log("Image uploaded successfully:", formData.image); // Log the URL
         } catch (error) {
             notify("Image upload failed.");
             notify(error.message)

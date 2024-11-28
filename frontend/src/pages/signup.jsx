@@ -3,25 +3,26 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
-import { ArrowBigLeft } from 'lucide-react';
+import { ArrowBigLeft, EyeClosed } from 'lucide-react';
 export default function Signup() {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: '',
   });
+  const [passwordVisib, setpasswordVisib] = useState(false)
   const navigate = useNavigate();
   const handleChange = (e) => {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
-  
+
   const notify = (message) => toast(message);
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post("http://localhost:3000/api/user/signup", formData);
-      console.log("data sended to api", response);
+     // console.log("data sended to api", response);
       if (response.status === 201) {
         notify("Account created successfully");
         navigate("/login")
@@ -29,17 +30,20 @@ export default function Signup() {
     } catch (err) {
       notify("please enter correct feilds or email already exist");
       console.log("an error occured", err);
-      console.log(response);
-      
+
+
       notify(err.message)
     }
-
   };
+  const togelpass = async (e) => {
+    e.preventDefault();
+    setpasswordVisib(!passwordVisib);
+  }
   return (
     <div className="main-div mt-16 m-10">
-      <i><a href="/"><ArrowBigLeft/></a></i>
+      <i><a href="/"><ArrowBigLeft /></a></i>
       <h2 className="text-gray-1500 text-xl font-bold text-center mb-4">Let's Signup</h2>
-      <form onSubmit={handleSubmit} className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 border border-blue-300">
+      <form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 border border-blue-300" onSubmit={handleSubmit}>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="username">
             Create a Username
@@ -74,22 +78,29 @@ export default function Signup() {
           </label>
           <input
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            type={passwordVisib ? 'text' : 'password'}
             id="password"
-            type="password"
             placeholder="Create a password"
             value={formData.password}
             onChange={handleChange}
             autoComplete="new-password"
+
           />
+          <button onClick={togelpass}
+          type='button'
+            className='p-1 m-1 rounded-sm ' >
+            <EyeClosed className='text-black'/>
+          </button>
         </div>
         <div className="flex items-center justify-between">
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
+            onSubmit={handleSubmit}
           >
             Sign up
           </button>
-          <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
+          <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="notfound">
             Forgot Password?
           </a>
         </div>

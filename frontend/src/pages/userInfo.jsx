@@ -15,13 +15,7 @@ export default function UserInfo() {
   useEffect(() => {
     const fetchDetails = async () => {
       try {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          navigate("/login");
-          return;
-        }
-
-        // Fetch user details (listings)
+       
         const response = await axios.get("http://localhost:3000/api/listings/userdetails", {
           headers: {
             Authorization: `Bearer ${token}`,

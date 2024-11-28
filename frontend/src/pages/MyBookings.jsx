@@ -16,6 +16,7 @@ export default function MyBookings() {
                         Authorization: `Bearer ${token}`,
                     },
                 });
+               // console.log(bookingsResponse);
 
                 if (bookingsResponse.data && Array.isArray(bookingsResponse.data.BookingDetails)) {
                     setListings(bookingsResponse.data.BookingDetails);
@@ -26,6 +27,7 @@ export default function MyBookings() {
                 if (err.response && err.response.status === 404) {
                     setListings([]);
                     console.log("No bookings found");
+                    
                 } else {
                     console.error("Error fetching bookings:", err);
                     setListings([]);

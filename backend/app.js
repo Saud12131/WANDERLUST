@@ -1,10 +1,10 @@
 import express from "express";
 import dotenv from "dotenv";
-import connectDB from "./config/connectdb.js"; 
-import UserRoute from "../backend/routes/userroutes.js"; 
-import listingRoute from "../backend/routes/listingRoutes.js"; 
-import BookingRoute from "./routes/bookingRoute.js"; 
-import PaymentRoute from "./routes/paymentRoute.js"; 
+import connectDB from "./config/connectdb.js";
+import UserRoute from "../backend/routes/userroutes.js";
+import listingRoute from "../backend/routes/listingRoutes.js";
+import BookingRoute from "./routes/bookingRoute.js";
+import PaymentRoute from "./routes/paymentRoute.js";
 import cors from "cors";
 
 dotenv.config();
@@ -34,4 +34,13 @@ app.use("/api/payment", PaymentRoute);
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server listening on port ${PORT}`);
+});
+
+app.use((err, req, res, next) => {
+  console.error(err.stack); // Log error stack for debugging
+  const statusCode = err.statusCode || 500; // Default to 500 if no status code is set
+  res.status(statusCode).json({
+    success: false,
+    message: err.message || "Internal Server Error",
+  });
 });
