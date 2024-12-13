@@ -57,7 +57,7 @@ export default function CreateListing() {
             const token = localStorage.getItem("token");
 
             const response = await axios.post(
-                `${url}/listings/createlisting`,
+                `https://wanderlust-backend-ak18.onrender.com/api/listings/createlisting`,
                 formData,
                 {
                     headers: {

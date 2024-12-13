@@ -17,7 +17,7 @@ export default function ListingInfo() {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`${url}/listings/listingdetails/${id}`, {
+        const response = await axios.get(`https://wanderlust-backend-ak18.onrender.com/api/listings/listingdetails/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -41,7 +41,7 @@ export default function ListingInfo() {
   const handelDelete = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.delete(`${url}/listings/deletelisting/${id}`, {
+      const response = await axios.delete(`https://wanderlust-backend-ak18.onrender.com/api/listings/deletelisting/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

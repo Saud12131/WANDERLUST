@@ -19,7 +19,7 @@ export default function ResetPassword() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${url}/user/reset-password/${id}/${token}`, { password });
+            const response = await axios.post(`https://wanderlust-backend-ak18.onrender.com/api/user/reset-password/${id}/${token}`, { password });
             if (response.data.success) {
                 notify("password updated successfully");
                 navigate("/login");

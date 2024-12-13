@@ -57,7 +57,7 @@ export default function BookListing() {
                 }
 
                 const { data } = await axios.get(
-                    `${url}/listings/listingdetails/${id}`,
+                    `https://wanderlust-backend-ak18.onrender.com/api/listings/listingdetails/${id}`,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
 

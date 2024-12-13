@@ -23,7 +23,7 @@ const Navbar = () => {
     if (searchQuery.trim() !== "") {
       try {
         const response = await fetch(
-          `${url}/listings/searchlisting?title=${searchQuery}`
+          `https://wanderlust-backend-ak18.onrender.com/api/listings/searchlisting?title=${searchQuery}`
         );
         if (response.ok) {
           navigate(`/searchresults?title=${searchQuery}`);

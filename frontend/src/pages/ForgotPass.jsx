@@ -18,7 +18,7 @@ export default function ForgotPass() {
     e.preventDefault();
    // console.log("button clicked", email);
     try {
-      const response = await axios.post(`${url}/user/forgot-password`, {email});
+      const response = await axios.post(`https://wanderlust-backend-ak18.onrender.com/api/user/forgot-password`, {email});
       if(response.data.success){
         notify("Email sended successfully");
       }

@@ -13,13 +13,13 @@ export default function PaymentButton({ bookingDetails, notify }) {
 
         try {
             
-            const { data: { key } } = await axios.get(`${url}/key`, {
+            const { data: { key } } = await axios.get(`https://wanderlust-backend-ak18.onrender.com/api/key`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
             
             const { data: { order } } = await axios.post(
-                `${url}/payment/checkout`,
+                `https://wanderlust-backend-ak18.onrender.com/api/payment/checkout`,
                 { amount: bookingDetails.totalPricetoPay },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -31,14 +31,14 @@ export default function PaymentButton({ bookingDetails, notify }) {
                 amount: order.amount,
                 currency: "INR",
                 order_id: order.id,
-                callback_url: `${url}/payment/paymentverification`,
+                callback_url: `https://wanderlust-backend-ak18.onrender.com/api/payment/paymentverification`,
                 prefill: { name: "User", email: "user@example.com" },
                 theme: { color: "#121212" },
                 handler: async function (response) {
                     // Step 4: Verify payment and create booking
                     try {
                         const bookingResponse = await axios.post(
-                            `${url}/bookings/booklisting`,
+                            `https://wanderlust-backend-ak18.onrender.com/api/bookings/booklisting`,
                             bookingDetails,
                             { headers: { Authorization: `Bearer ${token}` } }
                         );

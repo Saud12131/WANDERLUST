@@ -17,7 +17,7 @@ export default function AllListings() {
         const fetchData = async () => {
             try {
                 let token = localStorage.getItem('token');
-                let response = await axios.get(`${url}/listings/alllistings`, {
+                let response = await axios.get(`https://wanderlust-backend-ak18.onrender.com/api/listings/alllistings`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

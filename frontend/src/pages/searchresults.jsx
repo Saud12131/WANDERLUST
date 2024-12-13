@@ -16,7 +16,7 @@ export default function SearchResults() {
     useEffect(() => {
         const handleSearch = async () => {
             try {
-                const response = await axios.get(`${url}/listings/searchlisting?title=${title}`);
+                const response = await axios.get(`https://wanderlust-backend-ak18.onrender.com/api/listings/searchlisting?title=${title}`);
                 if (response.data.success) {
                     setSearchResults(response.data.listings);
                 }

@@ -11,7 +11,7 @@ export default function MyBookings() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const bookingsResponse = await axios.get(`${url}/bookings/mybookings`, {
+                const bookingsResponse = await axios.get(`https://wanderlust-backend-ak18.onrender.com/api/bookings/mybookings`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

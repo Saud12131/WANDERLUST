@@ -16,7 +16,7 @@ export default function UserInfo() {
     const fetchDetails = async () => {
       try {
        
-        const response = await axios.get(`${url}/listings/userdetails`, {
+        const response = await axios.get(`https://wanderlust-backend-ak18.onrender.com/api/listings/userdetails`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

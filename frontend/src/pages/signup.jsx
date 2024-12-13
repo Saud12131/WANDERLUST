@@ -22,7 +22,7 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`${url}/user/signup`, formData);
+      const response = await axios.post(`https://wanderlust-backend-ak18.onrender.com/api/user/signup`, formData);
      // console.log("data sended to api", response);
       if (response.status === 201) {
         notify("Account created successfully");
