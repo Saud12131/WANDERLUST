@@ -14,6 +14,8 @@ import BookListing from './pages/booklisting';
 import PaymentSuccess from './pages/paymentSuccess';
 import MyBookings from './pages/MyBookings';
 import NotFound from './pages/NotFound';
+import ForgotPass from './pages/ForgotPass';
+import ResetPassword from './pages/ResetPassword';
 function App() {
   return (
     <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
@@ -65,6 +67,18 @@ function App() {
             <ProtectedRoute>
               <BookListing />
             </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/forgot-password"
+          element={
+              <ForgotPass />
+          }
+        />
+        <Route
+          path="/reset-password/:id/:token"
+          element={
+              <ResetPassword />
           }
         />
 
