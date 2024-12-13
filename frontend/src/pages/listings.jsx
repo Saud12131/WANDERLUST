@@ -12,12 +12,12 @@ export default function AllListings() {
     const [listings, setListings] = useState([]);
     const navigate = useNavigate();
     const notify = (message) => toast(message);
-
+    const url = process.env.REACT_APP_API_BASE_URL;
     useEffect(() => {
         const fetchData = async () => {
             try {
                 let token = localStorage.getItem('token');
-                let response = await axios.get("http://localhost:3000/api/listings/alllistings", {
+                let response = await axios.get(`${url}/listings/alllistings`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

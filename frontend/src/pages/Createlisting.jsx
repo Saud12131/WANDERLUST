@@ -16,7 +16,7 @@ export default function CreateListing() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const notify = (message) => toast(message);
-
+    const url = process.env.REACT_APP_API_BASE_URL;
     const handleChange = (e) => {
         const { id, value } = e.target;
         setFormData({ ...formData, [id]: value });
@@ -57,7 +57,7 @@ export default function CreateListing() {
             const token = localStorage.getItem("token");
 
             const response = await axios.post(
-                "http://localhost:3000/api/listings/createlisting",
+                `${url}/listings/createlisting`,
                 formData,
                 {
                     headers: {

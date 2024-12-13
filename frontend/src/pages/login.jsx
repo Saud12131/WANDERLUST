@@ -16,10 +16,11 @@ export default function Login() {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
+  const url = process.env.REACT_APP_API_BASE_URL;
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/api/user/login", formData);
+      const response = await axios.post(`${url}/user/login`, formData);
       // console.log("logged in ", response);
       if (response.status === 200) {
         let token = response.data.token;

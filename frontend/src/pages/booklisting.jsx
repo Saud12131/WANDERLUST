@@ -15,6 +15,7 @@ export default function BookListing() {
         numOfGuest: '',
         totalPricetoPay: 0,
     });
+    const url = process.env.REACT_APP_API_BASE_URL;
     const [daysBooked, setDaysBooked] = useState(0);
     const navigate = useNavigate();
     const { id } = useParams();
@@ -56,7 +57,7 @@ export default function BookListing() {
                 }
 
                 const { data } = await axios.get(
-                    `http://localhost:3000/api/listings/listingdetails/${id}`,
+                    `${url}/listings/listingdetails/${id}`,
                     { headers: { Authorization: `Bearer ${token}` } }
                 );
 

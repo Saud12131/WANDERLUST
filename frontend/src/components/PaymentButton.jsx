@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 export default function PaymentButton({ bookingDetails, notify }) {
     const navigate = useNavigate();
+    const url = process.env.REACT_APP_API_BASE_URL;
     const handlePayment = async () => {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -12,13 +13,13 @@ export default function PaymentButton({ bookingDetails, notify }) {
 
         try {
             
-            const { data: { key } } = await axios.get("http://localhost:3000/api/key", {
+            const { data: { key } } = await axios.get(`${url}/key`, {
                 headers: { Authorization: `Bearer ${token}` },
             });
 
             
             const { data: { order } } = await axios.post(
-                "http://localhost:3000/api/payment/checkout",
+                `${url}/payment/checkout`,
                 { amount: bookingDetails.totalPricetoPay },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
@@ -30,14 +31,14 @@ export default function PaymentButton({ bookingDetails, notify }) {
                 amount: order.amount,
                 currency: "INR",
                 order_id: order.id,
-                callback_url: "http://localhost:3000/api/payment/paymentverification",
+                callback_url: `${url}/payment/paymentverification`,
                 prefill: { name: "User", email: "user@example.com" },
                 theme: { color: "#121212" },
                 handler: async function (response) {
                     // Step 4: Verify payment and create booking
                     try {
                         const bookingResponse = await axios.post(
-                            "http://localhost:3000/api/bookings/booklisting",
+                            `${url}/bookings/booklisting`,
                             bookingDetails,
                             { headers: { Authorization: `Bearer ${token}` } }
                         );

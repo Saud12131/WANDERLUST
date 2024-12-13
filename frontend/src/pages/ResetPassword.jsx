@@ -6,6 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import { ArrowBigLeft } from 'lucide-react';
 export default function ResetPassword() {
+    const url = process.env.REACT_APP_API_BASE_URL;
     const [password, setpassword] = useState('');
     const navigate = useNavigate();
     const notify = (message) => toast(message);
@@ -18,7 +19,7 @@ export default function ResetPassword() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`http://localhost:3000/api/user/reset-password/${id}/${token}`, { password });
+            const response = await axios.post(`${url}/user/reset-password/${id}/${token}`, { password });
             if (response.data.success) {
                 notify("password updated successfully");
                 navigate("/login");

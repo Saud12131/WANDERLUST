@@ -5,6 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 import { ArrowBigLeft, EyeClosed } from 'lucide-react';
 export default function Signup() {
+  const url = process.env.REACT_APP_API_BASE_URL;
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -21,7 +22,7 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:3000/api/user/signup", formData);
+      const response = await axios.post(`${url}/user/signup`, formData);
      // console.log("data sended to api", response);
       if (response.status === 201) {
         notify("Account created successfully");

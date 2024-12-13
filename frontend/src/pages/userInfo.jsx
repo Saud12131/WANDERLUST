@@ -11,12 +11,12 @@ export default function UserInfo() {
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
   const notify = (message) => toast(message);
-
+  const url = process.env.REACT_APP_API_BASE_URL;
   useEffect(() => {
     const fetchDetails = async () => {
       try {
        
-        const response = await axios.get("http://localhost:3000/api/listings/userdetails", {
+        const response = await axios.get(`${url}/listings/userdetails`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

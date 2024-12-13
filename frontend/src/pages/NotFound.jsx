@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
 const NotFound = () => {
+  const url = process.env.REACT_APP_API_BASE_URL;
   return (
     <div
       className="h-screen w-full flex flex-col justify-center items-center text-center px-4 bg-gray-900">

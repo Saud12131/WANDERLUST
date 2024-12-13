@@ -9,7 +9,7 @@ export default function ForgotPass() {
   const [email, setemail] = useState('');
   const navigate = useNavigate();
   const notify = (message) => toast(message);
-
+  const url = process.env.REACT_APP_API_BASE_URL;
   const handleChange = (e) => {
     setemail(e.target.value);
   };
@@ -18,7 +18,7 @@ export default function ForgotPass() {
     e.preventDefault();
    // console.log("button clicked", email);
     try {
-      const response = await axios.post("http://localhost:3000/api/user/forgot-password", {email});
+      const response = await axios.post(`${url}/user/forgot-password`, {email});
       if(response.data.success){
         notify("Email sended successfully");
       }

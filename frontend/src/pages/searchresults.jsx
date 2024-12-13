@@ -1,15 +1,14 @@
 // src/components/SearchResults.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Navbar from '../components/navbar';
+import Navbar from '../components/Navbar';
 import { useLocation } from 'react-router-dom';
-
-
 const useQuery = () => {
     return new URLSearchParams(useLocation().search);
 };
 
 export default function SearchResults() {
+    const url = process.env.REACT_APP_API_BASE_URL;
     const query = useQuery();
     const title = query.get('title') || ''; 
     const [searchResults, setSearchResults] = useState([]);
@@ -17,7 +16,7 @@ export default function SearchResults() {
     useEffect(() => {
         const handleSearch = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/api/listings/searchlisting?title=${title}`);
+                const response = await axios.get(`${url}/listings/searchlisting?title=${title}`);
                 if (response.data.success) {
                     setSearchResults(response.data.listings);
                 }

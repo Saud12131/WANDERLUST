@@ -7,6 +7,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const url = process.env.REACT_APP_API_BASE_URL;
 
   const handleLogout = () => {
     try {
@@ -22,7 +23,7 @@ const Navbar = () => {
     if (searchQuery.trim() !== "") {
       try {
         const response = await fetch(
-          `http://localhost:3000/api/listings/searchlisting?title=${searchQuery}`
+          `${url}/listings/searchlisting?title=${searchQuery}`
         );
         if (response.ok) {
           navigate(`/searchresults?title=${searchQuery}`);
@@ -46,11 +47,11 @@ const Navbar = () => {
           >
 
             <Link to="/" className="text-2xl font-bold text-blue-500">
-            <i className="fa-solid fa-route mr-4"></i>
+              <i className="fa-solid fa-route mr-4"></i>
             </Link>
-             <Link to="/" className="text-2xl font-bold text-blue-500">
-             Wanderlust
-            </Link> 
+            <Link to="/" className="text-2xl font-bold text-blue-500">
+              Wanderlust
+            </Link>
           </motion.div>
 
           {/* Desktop Menu */}
@@ -160,7 +161,7 @@ const Navbar = () => {
                 Create Listing
               </MobileNavLink>
               <MobileNavLink to="/mybookings" onClick={() => setIsMobileMenuOpen(false)} className="bg-blue-500 text-white px-4 py-2 rounded-md transition duration-300 hover:bg-sky-500">
-               My bookings
+                My bookings
               </MobileNavLink>
               <MobileNavLink to="/userinfo" onClick={() => setIsMobileMenuOpen(false)} className="text-teal-600 bg-blue-500 text-white  hover:bg-sky-500">
                 <i className="fas fa-user mr-2"></i> Profile

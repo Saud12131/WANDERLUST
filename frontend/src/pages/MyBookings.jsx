@@ -7,11 +7,11 @@ export default function MyBookings() {
     const [listings, setListings] = useState([]);
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
-
+    const url = process.env.REACT_APP_API_BASE_URL;
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const bookingsResponse = await axios.get("http://localhost:3000/api/bookings/mybookings", {
+                const bookingsResponse = await axios.get(`${url}/bookings/mybookings`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },

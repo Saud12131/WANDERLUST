@@ -12,12 +12,12 @@ export default function ListingInfo() {
   const notify = (message) => toast(message);
   const token = localStorage.getItem('token');
   const userId = token ? jwtDecode(token).id : null;
-
+  const url = process.env.REACT_APP_API_BASE_URL;
   useEffect(() => {
     const fetchData = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await axios.get(`http://localhost:3000/api/listings/listingdetails/${id}`, {
+        const response = await axios.get(`${url}/listings/listingdetails/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -41,7 +41,7 @@ export default function ListingInfo() {
   const handelDelete = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.delete(`http://localhost:3000/api/listings/deletelisting/${id}`, {
+      const response = await axios.delete(`${url}/listings/deletelisting/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

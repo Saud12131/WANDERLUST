@@ -3,6 +3,7 @@ import React from 'react'
 import { motion } from "framer-motion"
 
 export default function LandingPage() {
+  const url = process.env.REACT_APP_API_BASE_URL;
   const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null
   const text = "  Find your perfect getaway with Wanderlust – book homes, villas, and bungalows at your fingertips."
   return (
