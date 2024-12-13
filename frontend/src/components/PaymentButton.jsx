@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 export default function PaymentButton({ bookingDetails, notify }) {
     const navigate = useNavigate();
-    const url = process.env.REACT_APP_API_BASE_URL;
+    const url = import.meta.env.BACKEND_BASE_URLL;
     const handlePayment = async () => {
         const token = localStorage.getItem('token');
         if (!token) {

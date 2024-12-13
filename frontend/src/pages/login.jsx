@@ -16,7 +16,7 @@ export default function Login() {
     const { id, value } = e.target;
     setFormData({ ...formData, [id]: value });
   };
-  const url = process.env.REACT_APP_API_BASE_URL;
+  const url = import.meta.env.BACKEND_BASE_URLL;
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

@@ -9,7 +9,7 @@ export default function ForgotPass() {
   const [email, setemail] = useState('');
   const navigate = useNavigate();
   const notify = (message) => toast(message);
-  const url = process.env.REACT_APP_API_BASE_URL;
+  const url = import.meta.env.BACKEND_BASE_URLL;
   const handleChange = (e) => {
     setemail(e.target.value);
   };

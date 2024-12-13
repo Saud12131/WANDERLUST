@@ -7,7 +7,7 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
-  const url = process.env.REACT_APP_API_BASE_URL;
+  const url = import.meta.env.BACKEND_BASE_URL;
 
   const handleLogout = () => {
     try {

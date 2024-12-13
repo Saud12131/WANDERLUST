@@ -15,7 +15,7 @@ export default function BookListing() {
         numOfGuest: '',
         totalPricetoPay: 0,
     });
-    const url = process.env.REACT_APP_API_BASE_URL;
+    const url = import.meta.env.BACKEND_BASE_URLL;
     const [daysBooked, setDaysBooked] = useState(0);
     const navigate = useNavigate();
     const { id } = useParams();

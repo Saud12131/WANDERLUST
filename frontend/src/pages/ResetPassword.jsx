@@ -6,7 +6,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import { ArrowBigLeft } from 'lucide-react';
 export default function ResetPassword() {
-    const url = process.env.REACT_APP_API_BASE_URL;
+    const url = import.meta.env.BACKEND_BASE_URLL;
     const [password, setpassword] = useState('');
     const navigate = useNavigate();
     const notify = (message) => toast(message);

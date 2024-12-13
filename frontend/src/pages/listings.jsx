@@ -12,7 +12,7 @@ export default function AllListings() {
     const [listings, setListings] = useState([]);
     const navigate = useNavigate();
     const notify = (message) => toast(message);
-    const url = process.env.REACT_APP_API_BASE_URL;
+    const url = import.meta.env.BACKEND_BASE_URLL;
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -28,7 +28,7 @@ export default function AllListings() {
                     console.log("Unexpected data format", response.data);
                     notify("Unexpected data format received");
                 }
-                
+
             } catch (err) {
                 console.log("An error occurred:", err);
                 notify(err.message);
@@ -48,11 +48,11 @@ export default function AllListings() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                     className="text-4xl font-bold text-white text-center mb-12"
-                    >
+                >
                     Explore All Listings
-                    <ScrollableFilters/>
+                    <ScrollableFilters />
                 </motion.h1>
-                <motion.div 
+                <motion.div
                     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -70,7 +70,7 @@ export default function AllListings() {
                 </motion.div>
             </div>
             <ToastContainer />
-           <Footer/>
+            <Footer />
         </div>
     );
 }

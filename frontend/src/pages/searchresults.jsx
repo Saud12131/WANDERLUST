@@ -8,7 +8,7 @@ const useQuery = () => {
 };
 
 export default function SearchResults() {
-    const url = process.env.REACT_APP_API_BASE_URL;
+    const url = import.meta.env.BACKEND_BASE_URLL;
     const query = useQuery();
     const title = query.get('title') || ''; 
     const [searchResults, setSearchResults] = useState([]);

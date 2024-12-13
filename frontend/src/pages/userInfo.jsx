@@ -11,7 +11,7 @@ export default function UserInfo() {
   const token = localStorage.getItem('token');
   const navigate = useNavigate();
   const notify = (message) => toast(message);
-  const url = process.env.REACT_APP_API_BASE_URL;
+  const url = import.meta.env.BACKEND_BASE_URLL;
   useEffect(() => {
     const fetchDetails = async () => {
       try {

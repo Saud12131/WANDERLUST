@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 import { ArrowBigLeft, EyeClosed } from 'lucide-react';
 export default function Signup() {
-  const url = process.env.REACT_APP_API_BASE_URL;
+  const url = import.meta.env.BACKEND_BASE_URLL;
   const [formData, setFormData] = useState({
     username: '',
     email: '',

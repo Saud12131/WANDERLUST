@@ -7,7 +7,7 @@ export default function MyBookings() {
     const [listings, setListings] = useState([]);
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
-    const url = process.env.REACT_APP_API_BASE_URL;
+    const url = import.meta.env.BACKEND_BASE_URLL;
     useEffect(() => {
         const fetchData = async () => {
             try {

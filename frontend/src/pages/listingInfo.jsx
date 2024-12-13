@@ -12,7 +12,7 @@ export default function ListingInfo() {
   const notify = (message) => toast(message);
   const token = localStorage.getItem('token');
   const userId = token ? jwtDecode(token).id : null;
-  const url = process.env.REACT_APP_API_BASE_URL;
+  const url = import.meta.env.BACKEND_BASE_URLL;
   useEffect(() => {
     const fetchData = async () => {
       try {

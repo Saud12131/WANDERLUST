@@ -16,7 +16,7 @@ export default function CreateListing() {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const notify = (message) => toast(message);
-    const url = process.env.REACT_APP_API_BASE_URL;
+    const url = import.meta.env.BACKEND_BASE_URLL;
     const handleChange = (e) => {
         const { id, value } = e.target;
         setFormData({ ...formData, [id]: value });
