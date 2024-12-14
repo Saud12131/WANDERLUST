@@ -34,7 +34,7 @@ This is a full-stack MERN (MongoDB, Express, React, Node.js) application for boo
   - Vercel
 
 
-- [Live Demo](Your Vercel Deployment Link)
+- [Live Demo]([Your Vercel Deployment Link](https://wanderlust-myk8.vercel.app/))
 - [GitHub Repository](Your GitHub Repository URL)
 
 ## Contributing
