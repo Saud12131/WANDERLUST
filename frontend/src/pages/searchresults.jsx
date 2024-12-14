@@ -1,7 +1,7 @@
 // src/components/SearchResults.js
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/navbar'
 import { useLocation } from 'react-router-dom';
 const useQuery = () => {
     return new URLSearchParams(useLocation().search);
