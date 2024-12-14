@@ -1,3 +1,42 @@
-Wanderlust
+# Property Booking App
 
-Wanderlust is a property booking application where users can book houses, villas, flats, and bungalows on a rental basis. Built with the MERN stack, the platform offers a seamless experience for users to browse, book, and manage property listings. The application is styled using Tailwind CSS and features dynamic animations powered by Framer Motion.
+## Description
+
+This is a full-stack MERN (MongoDB, Express, React, Node.js) application for booking properties on a rental basis. The app features a modern, responsive design using Tailwind CSS and smooth animations with Framer Motion.
+
+## Features
+
+- User authentication (login, register, forgot password)
+- Email verification using Nodemailer
+- Create, view, and book property listings
+- Delete listings (for property owners)
+- Integrated Razorpay payment gateway for secure transactions
+- Responsive design with Tailwind CSS
+- Smooth animations with Framer Motion
+
+## Technologies Used
+
+- Frontend:
+  - React.js
+  - Tailwind CSS
+  - Framer Motion
+- Backend:
+  - Node.js
+  - Express.js
+  - MongoDB
+- Authentication:
+  - JSON Web Tokens (JWT)
+- Email Service:
+  - Nodemailer
+- Payment Gateway:
+  - Razorpay
+- Deployment:
+  - Vercel
+
+
+- [Live Demo](Your Vercel Deployment Link)
+- [GitHub Repository](Your GitHub Repository URL)
+
+## Contributing
+
+Contributions, issues, and feature requests are welcome. Feel free to check issues page if you want to contribute.
