@@ -9,13 +9,25 @@ import cors from "cors";
 
 dotenv.config();
 const app = express();
-
 connectDB();
-app.use(cors({
-  origin: 'https://wanderlust-myk8.vercel.app',
 
-}));
+const allowedOrigins = [
+  'http://localhost:5173', // Development environment
+  'https://wanderlust-myk8.vercel.app', // Deployed frontend
+];
 
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true, // Allow cookies if needed
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
