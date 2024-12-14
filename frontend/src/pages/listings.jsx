@@ -7,7 +7,6 @@ import ListingCard from '../components/ListingCards';
 import { ToastContainer, toast } from 'react-toastify';
 import Footer from '../components/Footer';
 import 'react-toastify/dist/ReactToastify.css';
-import ScrollableFilters from '../components/Filters';
 export default function AllListings() {
     const [listings, setListings] = useState([]);
     const navigate = useNavigate();
@@ -42,7 +41,7 @@ export default function AllListings() {
     return (
         <div className="min-h-screen ">
             <Navbar />
-            <div className="container mx-auto px-4 py-16 ">
+            <div className="container mx-auto px-4 py-16  ">
                 <motion.h1
                     initial={{ opacity: 0, y: -20 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -50,7 +49,7 @@ export default function AllListings() {
                     className="text-4xl font-bold text-white text-center mb-12"
                 >
                     Explore All Listings
-                    <ScrollableFilters />
+
                 </motion.h1>
                 <motion.div
                     className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
