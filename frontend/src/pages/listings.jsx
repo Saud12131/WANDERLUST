@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { motion } from 'framer-motion';
-import Navbar from '../components/Navbar';
+import Navbar from '../components/navbar'
 import ListingCard from '../components/ListingCards';
 import { ToastContainer, toast } from 'react-toastify';
 import Footer from '../components/Footer';
