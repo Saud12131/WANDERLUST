@@ -4,6 +4,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from "react-router-dom";
 import { ArrowBigLeft, EyeClosed } from 'lucide-react';
+import { Spinner } from '../components/Spinner';
 export default function Signup() {
   const url = import.meta.env.BACKEND_BASE_URLL;
   const [formData, setFormData] = useState({
@@ -11,6 +12,7 @@ export default function Signup() {
     email: '',
     password: '',
   });
+   let [loading, setLoading] = useState(false);
   const [passwordVisib, setpasswordVisib] = useState(false)
   const navigate = useNavigate();
   const handleChange = (e) => {
@@ -22,17 +24,18 @@ export default function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const response = await axios.post(`https://wanderlust-backend-ak18.onrender.com/api/user/signup`, formData);
      // console.log("data sended to api", response);
       if (response.status === 201) {
         notify("Account created successfully");
         navigate("/login")
       }
+      setLoading(false);
     } catch (err) {
       notify("please enter correct feilds or email already exist");
       console.log("an error occured", err);
-
-
+      setLoading(false);
       notify(err.message)
     }
   };
@@ -98,8 +101,11 @@ export default function Signup() {
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
             onSubmit={handleSubmit}
-          >
-            Sign up
+            disabled={loading}
+                    >
+                      <h2 className='flex justify-center items-center'>
+                        {loading ? <Spinner /> : 'Signup'}
+                      </h2>
           </button>
           <a className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="notfound">
             Forgot Password?

@@ -4,12 +4,13 @@ import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
 import 'react-toastify/dist/ReactToastify.css';
 import { ArrowBigLeft, EyeClosed } from 'lucide-react';
-
+import { Spinner } from '../components/Spinner';
 export default function Login() {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
   });
+  let [loading, setLoading] = useState(false);
   const [passwordVisib, setpasswordVisib] = useState(false);
   const navigate = useNavigate();
   const notify = (message) => toast(message);
@@ -24,6 +25,7 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const response = await axios.post(`https://wanderlust-backend-ak18.onrender.com/api/user/login`, formData);
       if (response.status === 200) {
         let token = response.data.token;
@@ -31,8 +33,10 @@ export default function Login() {
         notify("Loggedin Successfully");
         navigate("/alllistings");
       }
+      setLoading(false);
     } catch (err) {
       notify("Please enter valid details");
+      setLoading(false)
     }
   };
 
@@ -88,8 +92,11 @@ export default function Login() {
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto"
             type="submit"
+            disabled={loading}
           >
-            Login
+            <h2 className='flex justify-center items-center'>
+              {loading ? <Spinner /> : 'Login'}
+            </h2>
           </button>
           <button
             className="bg-red-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto"
@@ -104,7 +111,7 @@ export default function Login() {
         </div>
       </form>
       <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto" 
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full sm:w-auto"
         onClick={() => navigate("/signup")}
       >
         Signup

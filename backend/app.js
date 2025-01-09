@@ -14,6 +14,7 @@ connectDB();
 const allowedOrigins = [
   'http://localhost:5173', // Development environment
   'https://wanderlust-myk8.vercel.app', // Deployed frontend
+  
 ];
 
 const corsOptions = {

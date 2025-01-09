@@ -7,14 +7,17 @@ import ListingCard from '../components/ListingCards';
 import { ToastContainer, toast } from 'react-toastify';
 import Footer from '../components/Footer';
 import 'react-toastify/dist/ReactToastify.css';
+import { Spinner } from '../components/Spinner';
 export default function AllListings() {
     const [listings, setListings] = useState([]);
+    let [loading, setLoading] = useState(false);
     const navigate = useNavigate();
     const notify = (message) => toast(message);
     const url = import.meta.env.BACKEND_BASE_URLL;
     useEffect(() => {
         const fetchData = async () => {
             try {
+                setLoading(true)
                 let token = localStorage.getItem('token');
                 let response = await axios.get(`https://wanderlust-backend-ak18.onrender.com/api/listings/alllistings`, {
                     headers: {
@@ -27,7 +30,7 @@ export default function AllListings() {
                     console.log("Unexpected data format", response.data);
                     notify("Unexpected data format received");
                 }
-
+                setLoading(false)
             } catch (err) {
                 console.log("An error occurred:", err);
                 notify(err.message);
@@ -37,6 +40,12 @@ export default function AllListings() {
 
         fetchData();
     }, []);
+
+    if (loading) {
+        return <div className='flex justify-center items-center h-screen'>
+            <Spinner />
+        </div>
+    }
 
     return (
         <div className="min-h-screen ">
